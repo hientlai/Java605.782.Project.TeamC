@@ -13,7 +13,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Hien Lai's Assignment 3</title>
+        <title>Team C's Project</title>
         <link href="Styles/main.css" rel="stylesheet" type="text/css" />
     </head>
     <body>
@@ -32,14 +32,16 @@
                 <c:when test="${sessionScope.isLogged == true}">
                     <form id="registrarCourseForm" action="RegistrationController_servlet" method="post">
                         <%
+                            RegistrarDAO dao = new RegistrarDAOImpl(JDBCDBUtil.getConnection());
                             int numberStudentsRegistered = (Integer) request.getAttribute("numberStudentRegistered");
                             int courseId = (Integer) request.getAttribute("courseId");
                             String courseName = (String) request.getAttribute("courseName");
-                            if (numberStudentsRegistered < Integer.parseInt(config.getInitParameter("coursecapacity"))) {
+                            if(numberStudentsRegistered == 0){
+                                dao.insertStudentRegistered(courseId, 1);
+                                out.print("<h3><font color='blue'>You have been registered to " + courseId + " " + courseName + "</font></h3>");
+                            }else if (numberStudentsRegistered < Integer.parseInt(config.getInitParameter("coursecapacity"))) {
                                 numberStudentsRegistered++;
                                 out.print("<h3><font color='blue'>You have been registered to " + courseId + " " + courseName + "</font></h3>");
-
-                                RegistrarDAO dao = new RegistrarDAOImpl(JDBCDBUtil.getConnection());
                                 dao.updateNumberStudentsRegistered(courseId, numberStudentsRegistered);
                             } else {
                                 out.print(" <h3><font color='red'>Sorry, the registration to this course has been closed based on availability</font></h3>");

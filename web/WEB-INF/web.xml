@@ -11,7 +11,7 @@
     </session-config>
     <servlet>
         <servlet-name>registrarcourse</servlet-name>
-        <jsp-file>RegistrarCourse.jsp</jsp-file>
+        <jsp-file>/RegistrarCourse.jsp</jsp-file>
         <init-param>
             <param-name>coursecapacity</param-name>
             <param-value>8</param-value>

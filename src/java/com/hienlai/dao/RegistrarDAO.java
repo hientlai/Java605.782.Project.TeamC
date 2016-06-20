@@ -20,6 +20,10 @@ public interface RegistrarDAO {
     public int retrieveStudentsRegistered(int courseId);
 
     /**
+     * Insert student registerd
+     */
+    public boolean insertStudentRegistered(int courseId, int numberStudentsRegistered );
+    /**
      * update number student registered
      *
      * @param courseId

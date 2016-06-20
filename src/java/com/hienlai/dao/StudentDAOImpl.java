@@ -64,6 +64,7 @@ public class StudentDAOImpl implements StudentDAO {
         return false;
     }
 
+    @Override
     public boolean insertStudent(String firstName, String lastName, String ssn, String email, String address, String userId, String password) {
         System.out.println("Insert student's record to database.");
         PreparedStatement pstmt = null;
@@ -77,7 +78,11 @@ public class StudentDAOImpl implements StudentDAO {
             pstmt.setString(6, userId);
             pstmt.setString(7, password);
 
-            pstmt.executeUpdate();
+            int count = pstmt.executeUpdate();
+            if(count == 1)
+                return true;
+            else 
+                return false;
         } catch (SQLException ex) {
             Logger.getLogger(StudentDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -90,7 +95,7 @@ public class StudentDAOImpl implements StudentDAO {
             }
         }
 
-        return true;
+        return false;
     }
 
     @Override
@@ -109,7 +114,10 @@ public class StudentDAOImpl implements StudentDAO {
                 firstName = resultSet.getString("FIRST_NAME");
                 lastName = resultSet.getString("LAST_NAME");
             }
-            return firstName + " " + lastName;
+            if(firstName == null && lastName == null)
+                return null;
+            else
+                return firstName + " " + lastName;
 
         } catch (SQLException e) {
             e.printStackTrace();

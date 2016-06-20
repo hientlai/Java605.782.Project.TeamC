@@ -10,9 +10,6 @@ import com.hienlai.dao.StudentDAOImpl;
 import com.hienlai.util.JDBCDBUtil;
 import com.hienlai.util.Utils;
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -81,9 +78,22 @@ public class Registration extends HttpServlet {
             //Insert into database
 
             StudentDAO dao = new StudentDAOImpl(JDBCDBUtil.getConnection());
-            dao.insertStudent(firstname, lastname, ssn, email, address, userid, password);
-            session.setAttribute("isLogged", true);
-            Utils.showWelcomePage(firstname + " " + lastname, response);
+            if (dao.getUserName(userid) == null) {
+                if (dao.insertStudent(firstname, lastname, ssn, email, address, userid, password)) {
+                    session.setAttribute("isLogged", true);
+                    Utils.showWelcomePage(firstname + " " + lastname, response);
+                } else {
+                    //Show error message to user if there is any issue with application.
+                    request.setAttribute("errorMessage", "Unable to register the user. Please contact the administrator");
+                    RequestDispatcher rd = request.getRequestDispatcher("error.jsp");
+                    rd.forward(request, response);
+                }
+            } else {
+                //Check if the user is already exist
+                request.setAttribute("errorMessage", "The user is already exist.");
+                RequestDispatcher rd = request.getRequestDispatcher("error.jsp");
+                rd.forward(request, response);
+            }
 
         }
 

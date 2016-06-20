@@ -90,4 +90,34 @@ public class RegistrarDAOImpl implements RegistrarDAO {
         return false;
     }
 
+    @Override
+    public boolean insertStudentRegistered(int courseId, int numberStudentsRegistered) {
+        System.out.println("Insert number of student registered " + courseId + " " + numberStudentsRegistered);
+        PreparedStatement pstmt = null;
+        ResultSet resultSet = null;
+        try {
+            Statement statement = conn.createStatement();
+            pstmt = conn.prepareStatement("INSERT INTO REGISTRAR(COURSEID, NUMBER_STUDENTS_REGISTRED) VALUES(?,?)");
+            pstmt.setInt(1, courseId);
+            pstmt.setInt(2, numberStudentsRegistered);
+            pstmt.executeUpdate();
+            return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(StudentDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return false;
+    }
+
 }
