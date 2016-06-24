@@ -10,7 +10,7 @@
 	z-index: 9999;	
 }
 .leftmenu{
-    background-color: rgb(170, 170, 170); 
+    background-color: rgb(255, 255, 255); 
     height: 750px; width: 9%; 
     float: left;
 }
@@ -27,7 +27,7 @@
     margin-top:1%;
 }
 .rightmenu{
-    background-color: rgb(170, 170, 170); 
+    background-color: rgb(255, 255, 255); 
     height: 750px; width: 9%; 
     float: right;
 }

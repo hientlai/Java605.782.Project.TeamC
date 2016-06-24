@@ -24,9 +24,14 @@ and open the template in the editor.
         <div class ="main">
             <form id="registerFormA" action="RegistrationController_servlet" method="post">
                 <h2> Registration Form A  </h2>
-                <br/>
-                <br/>
+
                 <table >
+                    <tr>
+                        <td><b><u>R</u>ole: </b></td>
+                        <td><input type="radio" checked name="role" value="Student"> Student<br>
+                            <input type="radio" name="role" value="Faculty"> Faculty<br>
+                            <input type="radio" name="role" value="Staff"> Staff</td>
+                    </tr>
                     <tr>
                         <td><b><u>U</u>ser Id: </b></td>
                         <td><input type="text" accesskey="u" name="userid_reg"></td>
@@ -72,7 +77,7 @@ and open the template in the editor.
         </div>
 
         <div class="bottom">
-            Hien Lai (hlai12)
+            Project Team C
         </div>
     </body>
 </html>

@@ -59,7 +59,7 @@
         </div>
 
         <div class="bottom">
-            Hien Lai (hlai12)
+            Project Team C
         </div>
     </body>
 </html>

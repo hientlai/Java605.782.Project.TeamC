@@ -11,6 +11,7 @@ import com.hienlai.util.JDBCDBUtil;
 import com.hienlai.util.Utils;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
@@ -39,6 +40,9 @@ public class Login extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+        ServletContext sc = this.getServletContext();
+        String path = sc.getRealPath("/Images/newlogo.png");
+        System.out.println("path " + path);
         HttpSession session = request.getSession(true);
         boolean isValid = false;
         String userName = null;
@@ -97,7 +101,14 @@ public class Login extends HttpServlet {
                 out.println("</html>");
             }
         } else {
-            Utils.showWelcomePage(userName, response);
+            String role = "Staff";
+            if ("Student".equals(role)) {
+                Utils.showStudentWelcomePage(userName, response);
+            } else if ("Staff".equals(role)) {
+                Utils.showStaffWelcomePage(userName, response);
+            } else if ("Faculty".equals(role)) {
+                Utils.showFacultyWelcomePage(userName, response);
+            }
         }
 
     }

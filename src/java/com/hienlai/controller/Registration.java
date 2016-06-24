@@ -48,6 +48,7 @@ public class Registration extends HttpServlet {
             String lastname = request.getParameter("lastname_reg");
             String ssn = request.getParameter("ssn_1") + request.getParameter("ssn_2") + request.getParameter("ssn_3");
             String email = request.getParameter("email_reg");
+            String role = request.getParameter("role");
 
             boolean validateUserPass = Utils.validateUserNamePassword(userid, password, password_rpt, response);
             if (!validateUserPass) {
@@ -61,6 +62,7 @@ public class Registration extends HttpServlet {
             session.setAttribute("lastname", lastname);
             session.setAttribute("ssn", ssn);
             session.setAttribute("email", email);
+            session.setAttribute("role", role);
 
             //redirect to Form B
             RequestDispatcher rd = request.getRequestDispatcher("registrationFormB.html");
@@ -75,13 +77,19 @@ public class Registration extends HttpServlet {
             String lastname = (String) session.getAttribute("lastname");
             String ssn = (String) session.getAttribute("ssn");
             String email = (String) session.getAttribute("email");
+            String role = (String) session.getAttribute("role");
             //Insert into database
 
             StudentDAO dao = new StudentDAOImpl(JDBCDBUtil.getConnection());
             if (dao.getUserName(userid) == null) {
                 if (dao.insertStudent(firstname, lastname, ssn, email, address, userid, password)) {
                     session.setAttribute("isLogged", true);
-                    Utils.showWelcomePage(firstname + " " + lastname, response);
+                    if("Student".equals(role))
+                        Utils.showStudentWelcomePage(firstname + " " + lastname, response);
+                    else if("Staff".equals(role))
+                        Utils.showStaffWelcomePage(firstname + " " + lastname, response);
+                    else if("Faculty".equals(role))
+                        Utils.showFacultyWelcomePage(firstname + " " + lastname, response);
                 } else {
                     //Show error message to user if there is any issue with application.
                     request.setAttribute("errorMessage", "Unable to register the user. Please contact the administrator");
