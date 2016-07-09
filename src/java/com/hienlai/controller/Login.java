@@ -5,6 +5,10 @@
  */
 package com.hienlai.controller;
 
+import com.hienlai.dao.FacultyDAO;
+import com.hienlai.dao.FacultyDAOImpl;
+import com.hienlai.dao.StaffDAO;
+import com.hienlai.dao.StaffDAOImpl;
 import com.hienlai.dao.StudentDAO;
 import com.hienlai.dao.StudentDAOImpl;
 import com.hienlai.util.JDBCDBUtil;
@@ -42,9 +46,7 @@ public class Login extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         ServletContext sc = this.getServletContext();
         String path = sc.getRealPath("/Images/newlogo.png");
-        System.out.println("path " + path);
         HttpSession session = request.getSession(true);
-        boolean isValid = false;
         String userName = null;
         String userid = request.getParameter("userid_login");
         String password = request.getParameter("password_login");
@@ -54,12 +56,29 @@ public class Login extends HttpServlet {
         }
         //check user id and password in database
         boolean isSuccess = false;
-
-        StudentDAO dao = new StudentDAOImpl(JDBCDBUtil.getConnection());
-        if (dao.isUserIdPasswordMatch(userid, password)) {
+        String role = null;
+        StudentDAO studentdao = new StudentDAOImpl(JDBCDBUtil.getConnection());
+        if (studentdao.isUserIdPasswordMatch(userid, password)) {
             session.setAttribute("isLogged", true);
             isSuccess = true;
-            userName = dao.getUserName(userid);
+            userName = studentdao.getUserName(userid);
+            role = STUDENT;
+        }
+
+        StaffDAO staffdao = new StaffDAOImpl(JDBCDBUtil.getConnection());
+        if (staffdao.isUserIdPasswordMatch(userid, password)) {
+            session.setAttribute("isLogged", true);
+            isSuccess = true;
+            userName = staffdao.getUserName(userid);
+            role = STAFF;
+        }
+
+        FacultyDAO facultydao = new FacultyDAOImpl(JDBCDBUtil.getConnection());
+        if (facultydao.isUserIdPasswordMatch(userid, password)) {
+            session.setAttribute("isLogged", true);
+            isSuccess = true;
+            userName = facultydao.getUserName(userid);
+            role = FACULTY;
         }
 
         if (isSuccess == false) {
@@ -100,18 +119,18 @@ public class Login extends HttpServlet {
                 out.println("</body>");
                 out.println("</html>");
             }
-        } else {
-            String role = "Staff";
-            if ("Student".equals(role)) {
-                Utils.showStudentWelcomePage(userName, response);
-            } else if ("Staff".equals(role)) {
-                Utils.showStaffWelcomePage(userName, response);
-            } else if ("Faculty".equals(role)) {
-                Utils.showFacultyWelcomePage(userName, response);
-            }
+        } else if (STUDENT.equals(role)) {
+            Utils.showStudentWelcomePage(userName, response);
+        } else if (STAFF.equals(role)) {
+            Utils.showStaffWelcomePage(userName, response);
+        } else if (FACULTY.equals(role)) {
+            Utils.showFacultyWelcomePage(userName, response);
         }
 
     }
+    public static final String FACULTY = "Faculty";
+    public static final String STAFF = "Staff";
+    public static final String STUDENT = "Student";
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
