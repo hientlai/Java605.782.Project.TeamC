@@ -17,24 +17,24 @@ import java.util.logging.Logger;
  *
  * @author Hien
  */
-public class StudentDAOImpl implements StudentDAO {
+public class FacultyDAOImpl implements FacultyDAO {
 
     private Connection conn;
 
-    public StudentDAOImpl(Connection conn) {
+    public FacultyDAOImpl(Connection conn) {
 
         this.conn = conn;
     }
 
     @Override
     public boolean isUserIdPasswordMatch(String userId, String password) {
-        System.out.println("Check the student is exist by userid and password");
+        System.out.println("Check the faculty is exist by userid and password");
         PreparedStatement pstmt = null;
         ResultSet resultSet = null;
         int count = 0;
         try {
             Statement statement = conn.createStatement();
-            pstmt = conn.prepareStatement("SELECT count(*) as nost FROM STUDENT WHERE USERID = ? AND PASSWORD = ?");
+            pstmt = conn.prepareStatement("SELECT count(*) as nost FROM FACULTY WHERE USERID = ? AND PASSWORD = ?");
             pstmt.setString(1, userId);
             pstmt.setString(2, password);
             resultSet = pstmt.executeQuery();
@@ -58,7 +58,7 @@ public class StudentDAOImpl implements StudentDAO {
                     pstmt.close();
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(StudentDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FacultyDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return false;
@@ -66,10 +66,10 @@ public class StudentDAOImpl implements StudentDAO {
 
     @Override
     public boolean insert(String firstName, String lastName, String ssn, String email, String address, String userId, String password) {
-        System.out.println("Insert student's record to database.");
+        System.out.println("Insert faculty's record to database.");
         PreparedStatement pstmt = null;
         try {
-            pstmt = conn.prepareStatement("INSERT INTO STUDENT(FIRST_NAME, LAST_NAME, SSN, EMAIL, ADDRESS, USERID, PASSWORD) VALUES (?,?,?,?,?,?,?)");
+            pstmt = conn.prepareStatement("INSERT INTO FACULTY(FIRST_NAME, LAST_NAME, SSN, EMAIL, ADDRESS, USERID, PASSWORD) VALUES (?,?,?,?,?,?,?)");
             pstmt.setString(1, firstName);
             pstmt.setString(2, lastName);
             pstmt.setString(3, ssn);
@@ -84,13 +84,13 @@ public class StudentDAOImpl implements StudentDAO {
             else 
                 return false;
         } catch (SQLException ex) {
-            Logger.getLogger(StudentDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(FacultyDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             if (pstmt != null) {
                 try {
                     pstmt.close();
                 } catch (SQLException ex) {
-                    Logger.getLogger(StudentDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(FacultyDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
@@ -107,7 +107,7 @@ public class StudentDAOImpl implements StudentDAO {
         String lastName = null;
         try {
             Statement statement = conn.createStatement();
-            pstmt = conn.prepareStatement("SELECT FIRST_NAME, LAST_NAME FROM STUDENT WHERE USERID = ?");
+            pstmt = conn.prepareStatement("SELECT FIRST_NAME, LAST_NAME FROM FACULTY WHERE USERID = ?");
             pstmt.setString(1, userId);
             resultSet = pstmt.executeQuery();
             while (resultSet.next()) {
@@ -130,7 +130,7 @@ public class StudentDAOImpl implements StudentDAO {
                     pstmt.close();
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(StudentDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FacultyDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         return null;

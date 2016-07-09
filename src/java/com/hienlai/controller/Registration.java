@@ -5,8 +5,11 @@
  */
 package com.hienlai.controller;
 
+import com.hienlai.dao.FacultyDAOImpl;
+import com.hienlai.dao.StaffDAOImpl;
 import com.hienlai.dao.StudentDAO;
 import com.hienlai.dao.StudentDAOImpl;
+import com.hienlai.dao.UserDAO;
 import com.hienlai.util.JDBCDBUtil;
 import com.hienlai.util.Utils;
 import java.io.IOException;
@@ -80,25 +83,54 @@ public class Registration extends HttpServlet {
             String role = (String) session.getAttribute("role");
             //Insert into database
 
-            StudentDAO dao = new StudentDAOImpl(JDBCDBUtil.getConnection());
-            if (dao.getUserName(userid) == null) {
-                if (dao.insertStudent(firstname, lastname, ssn, email, address, userid, password)) {
-                    session.setAttribute("isLogged", true);
-                    if("Student".equals(role))
+            UserDAO dao = null;
+            boolean isInserted = false;
+            if ("Student".equals(role)) {
+                dao = new StudentDAOImpl(JDBCDBUtil.getConnection());
+                if (dao.getUserName(userid) == null) {
+                    isInserted = dao.insert(firstname, lastname, ssn, email, address, userid, password);
+                    if (isInserted) {
                         Utils.showStudentWelcomePage(firstname + " " + lastname, response);
-                    else if("Staff".equals(role))
-                        Utils.showStaffWelcomePage(firstname + " " + lastname, response);
-                    else if("Faculty".equals(role))
-                        Utils.showFacultyWelcomePage(firstname + " " + lastname, response);
+                    }
                 } else {
-                    //Show error message to user if there is any issue with application.
-                    request.setAttribute("errorMessage", "Unable to register the user. Please contact the administrator");
+                    //Check if the user is already exist
+                    request.setAttribute("errorMessage", "The user is already exist.");
                     RequestDispatcher rd = request.getRequestDispatcher("error.jsp");
                     rd.forward(request, response);
                 }
+            } else if ("Staff".equals(role)) {
+                dao = new StaffDAOImpl(JDBCDBUtil.getConnection());
+                if (dao.getUserName(userid) == null) {
+                    isInserted = dao.insert(firstname, lastname, ssn, email, address, userid, password);
+                    if (isInserted) {
+                        Utils.showStaffWelcomePage(firstname + " " + lastname, response);
+                    }
+                } else {
+                    //Check if the user is already exist
+                    request.setAttribute("errorMessage", "The user is already exist.");
+                    RequestDispatcher rd = request.getRequestDispatcher("error.jsp");
+                    rd.forward(request, response);
+                }
+            } else if ("Faculty".equals(role)) {
+                dao = new FacultyDAOImpl(JDBCDBUtil.getConnection());
+                if (dao.getUserName(userid) == null) {
+                    isInserted = dao.insert(firstname, lastname, ssn, email, address, userid, password);
+                    if (isInserted) {
+                        Utils.showFacultyWelcomePage(firstname + " " + lastname, response);
+                    }
+                } else {
+                    //Check if the user is already exist
+                    request.setAttribute("errorMessage", "The user is already exist.");
+                    RequestDispatcher rd = request.getRequestDispatcher("error.jsp");
+                    rd.forward(request, response);
+                }
+            }
+
+            if (isInserted) {
+                session.setAttribute("isLogged", true);
             } else {
-                //Check if the user is already exist
-                request.setAttribute("errorMessage", "The user is already exist.");
+                //Show error message to user if there is any issue with application.
+                request.setAttribute("errorMessage", "Unable to register the user. Please contact the administrator");
                 RequestDispatcher rd = request.getRequestDispatcher("error.jsp");
                 rd.forward(request, response);
             }

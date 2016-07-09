@@ -9,7 +9,7 @@ package com.hienlai.dao;
  *
  * @author Hien
  */
-public interface StudentDAO extends UserDAO {
+public interface StaffDAO  extends UserDAO{
 
-   
+    
 }
