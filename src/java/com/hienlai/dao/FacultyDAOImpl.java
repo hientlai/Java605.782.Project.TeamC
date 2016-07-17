@@ -114,8 +114,9 @@ public class FacultyDAOImpl implements FacultyDAO {
             while (resultSet.next()) {
                 firstName = resultSet.getString("FIRST_NAME");
                 lastName = resultSet.getString("LAST_NAME");
+                return new User(firstName,lastName,null,null,null,null,null,null);
             }
-            return new User(firstName,lastName,null,null,null,null,null,null);
+            return null;
 
         } catch (SQLException e) {
             e.printStackTrace();

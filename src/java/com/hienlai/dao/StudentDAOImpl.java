@@ -116,8 +116,9 @@ public class StudentDAOImpl implements StudentDAO {
                 firstName = resultSet.getString("FIRST_NAME");
                 lastName = resultSet.getString("LAST_NAME");
                 id = resultSet.getString("STUDENT_ID");
+                return new User(firstName,lastName,null,null,null,null,null,id);
             }
-            return new User(firstName,lastName,null,null,null,null,null,id);
+            return null;
 
         } catch (SQLException e) {
             e.printStackTrace();

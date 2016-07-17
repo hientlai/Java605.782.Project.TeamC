@@ -63,15 +63,17 @@ public class Login extends HttpServlet {
             session.setAttribute("isLogged", true);
             isSuccess = true;
             final User user = studentdao.getUser(userid);
-            String firstName = user.getFirstName();
-            String lastName = user.getLastName();
-            if (firstName != null && lastName != null) {
-                userName = firstName + " " + lastName;
-            } else {
-                userName = null;
+            if(user!=null){
+                String firstName = user.getFirstName();
+                String lastName = user.getLastName();
+                if (firstName != null && lastName != null) {
+                    userName = firstName + " " + lastName;
+                } else {
+                    userName = null;
+                }
+                session.setAttribute("student_id", user.getId());
+                role = STUDENT;
             }
-            session.setAttribute("student_id", user.getId());
-            role = STUDENT;
         }
 
         StaffDAO staffdao = new StaffDAOImpl(JDBCDBUtil.getConnection());
