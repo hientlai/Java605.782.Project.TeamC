@@ -5,6 +5,8 @@
  */
 package com.hienlai.dao;
 
+import com.hienlai.model.User;
+
 /**
  *
  * @author Hien
@@ -26,7 +28,7 @@ public interface UserDAO {
      * @param userId
      * @return
      */
-    public String getUserName(String userId);
+    public User getUser(String userId);
 
     /**
      * insert student to database

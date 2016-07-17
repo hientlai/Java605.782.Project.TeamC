@@ -9,15 +9,11 @@
             30
         </session-timeout>
     </session-config>
-    <servlet>
+        <servlet>
         <servlet-name>registrarcourse</servlet-name>
         <jsp-file>/RegistrarCourse.jsp</jsp-file>
-        <init-param>
-            <param-name>coursecapacity</param-name>
-            <param-value>8</param-value>
-        </init-param>
+
     </servlet>
- 
     <servlet-mapping>
         <servlet-name>registrarcourse</servlet-name>
         <url-pattern>/registrarcourse</url-pattern>

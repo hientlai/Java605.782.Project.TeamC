@@ -87,7 +87,7 @@ public class Registration extends HttpServlet {
             boolean isInserted = false;
             if ("Student".equals(role)) {
                 dao = new StudentDAOImpl(JDBCDBUtil.getConnection());
-                if (dao.getUserName(userid) == null) {
+                if (dao.getUser(userid) == null) {
                     isInserted = dao.insert(firstname, lastname, ssn, email, address, userid, password);
                     if (isInserted) {
                         Utils.showStudentWelcomePage(firstname + " " + lastname, response);
@@ -100,7 +100,7 @@ public class Registration extends HttpServlet {
                 }
             } else if ("Staff".equals(role)) {
                 dao = new StaffDAOImpl(JDBCDBUtil.getConnection());
-                if (dao.getUserName(userid) == null) {
+                if (dao.getUser(userid) == null) {
                     isInserted = dao.insert(firstname, lastname, ssn, email, address, userid, password);
                     if (isInserted) {
                         Utils.showStaffWelcomePage(firstname + " " + lastname, response);
@@ -113,7 +113,7 @@ public class Registration extends HttpServlet {
                 }
             } else if ("Faculty".equals(role)) {
                 dao = new FacultyDAOImpl(JDBCDBUtil.getConnection());
-                if (dao.getUserName(userid) == null) {
+                if (dao.getUser(userid) == null) {
                     isInserted = dao.insert(firstname, lastname, ssn, email, address, userid, password);
                     if (isInserted) {
                         Utils.showFacultyWelcomePage(firstname + " " + lastname, response);

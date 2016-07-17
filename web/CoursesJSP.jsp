@@ -12,6 +12,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Team C's Project</title>
         <link href="Styles/main.css" rel="stylesheet" type="text/css" />
+        <script src="https://code.jquery.com/jquery-3.1.0.min.js"   integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="   crossorigin="anonymous"></script>
+          <script type="text/javascript" src="Scripts/myScript.js"></script>
     </head>
     <body>
         <div class="top">
@@ -27,16 +29,35 @@
         <div class ="main">
             <c:choose>
                 <c:when test="${sessionScope.isLogged == true}">
-                    <form id="courseForm" action="RegistrationController_servlet" method="post">
+                    
                         <h2> Welcome to the Student Registration Site  </h2>
                         <br/>
                         <br/>
-                        <h4>List of available courses for current semester</h4>
-                        <select name="course">
-                            <c:forEach items="${courses}" var="course">
-                                <option value="${course.courseId}">${course.courseId} - ${course.course_name}</option>
-                            </c:forEach>
-                        </select>    
+                        <h4>Please choose term and year.</h4>
+                        <form id="courseForm">
+                            <input type="hidden" name="requesttype" value="CoursesList">
+                            <div class="row">
+                                <div class="column one">Term: </div>
+                                <div class="column two"> <select name="term" id="term">
+                                        <option>Spring</option>
+                                        <option>Summer</option>
+                                        <option>Fall</option>
+                                    </select></div>
+                            </div>
+                            <div class="row">
+                                <div class="column one">Year: </div>
+                                <div class="column two"><select name="year" id="year">
+                                        <option>2016</option>
+                                        <option>2017</option>
+                                    </select></div>
+                            </div>
+                        </form>
+                        <br/>
+                        <h4>Available courses: </h4>
+                        <br/>
+                        <form id="courseForm" action="RegistrationController_servlet" method="post">
+                        <div id="coursedropdown"></div>
+                           
                         <br/>
                         <br/>
                         <br/>
@@ -46,7 +67,7 @@
                         <br/>
                         <br/>
                         <br/>   
-                    </form> 
+                        </form> 
                 </c:when>
                 <c:otherwise>
                     <h2>Please log in.</h2>
@@ -62,4 +83,5 @@
             Project Team C
         </div>
     </body>
+    <script type="text/javascript" src="Scripts/myScript.js"></script>
 </html>

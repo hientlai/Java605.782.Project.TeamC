@@ -64,3 +64,28 @@ input.bold{
     font-weight: bold;
 }
 
+.row
+{
+    display: table;
+    width: 100%; /*Optional*/
+    table-layout: fixed; /*Optional*/
+    border-spacing: 10px; /*Optional*/
+}
+.column.one
+{
+    display: table-cell;
+    float: left;
+    width: 10%;
+}
+.column.two
+{
+    display: table-cell;
+    float: left;
+    width: 20%;
+}
+.column.three
+{
+    display: table-cell;
+    float: left;
+    width: 30%;
+}

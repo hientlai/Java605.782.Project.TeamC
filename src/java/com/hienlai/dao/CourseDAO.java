@@ -14,7 +14,7 @@ import java.util.List;
  */
 public interface CourseDAO {
 
-    /**
+     /**
      * retrieves courses
      *
      * @return
@@ -28,4 +28,19 @@ public interface CourseDAO {
      * @return
      */
     public CoursesSupportBean retrieveCourse(int courseId);
+    
+    /**
+     * check course is exist
+     * @param courseId
+     * @return 
+     */
+    public boolean isCourseExist(int courseId);
+    
+    /**
+     * Insert a course to database
+     * @param courseId
+     * @param courseName
+     * @return 
+     */
+    public boolean insertCourse(int courseId, String courseName);
 }

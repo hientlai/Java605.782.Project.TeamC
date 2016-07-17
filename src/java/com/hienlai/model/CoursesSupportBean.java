@@ -13,24 +13,35 @@ import java.io.Serializable;
  */
 public class CoursesSupportBean implements Serializable {
 
-    private int courseId;
+    private int course_id;
     private String course_name;
+    private int offering_id;
 
-    public CoursesSupportBean(int courseId, String course_name) {
-        this.courseId = courseId;
+    public CoursesSupportBean(int course_id, String course_name,int offering_id) {
+        this.course_id = course_id;
         this.course_name = course_name;
+        this.offering_id = offering_id;
     }
 
-    public int getCourseId() {
-        return courseId;
+    public int getOffering_id() {
+        return offering_id;
+    }
+
+    public void setOffering_id(int offering_id) {
+        this.offering_id = offering_id;
+    }
+
+    
+    public int getCourse_id() {
+        return course_id;
     }
 
     public String getCourse_name() {
         return course_name;
     }
 
-    public void setCourseId(int courseId) {
-        this.courseId = courseId;
+    public void setCourse_id(int course_id) {
+        this.course_id = course_id;
     }
 
     public void setCourse_name(String course_name) {

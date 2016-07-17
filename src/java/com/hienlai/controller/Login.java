@@ -11,6 +11,7 @@ import com.hienlai.dao.StaffDAO;
 import com.hienlai.dao.StaffDAOImpl;
 import com.hienlai.dao.StudentDAO;
 import com.hienlai.dao.StudentDAOImpl;
+import com.hienlai.model.User;
 import com.hienlai.util.JDBCDBUtil;
 import com.hienlai.util.Utils;
 import java.io.IOException;
@@ -61,7 +62,15 @@ public class Login extends HttpServlet {
         if (studentdao.isUserIdPasswordMatch(userid, password)) {
             session.setAttribute("isLogged", true);
             isSuccess = true;
-            userName = studentdao.getUserName(userid);
+            final User user = studentdao.getUser(userid);
+            String firstName = user.getFirstName();
+            String lastName = user.getLastName();
+            if (firstName != null && lastName != null) {
+                userName = firstName + " " + lastName;
+            } else {
+                userName = null;
+            }
+            session.setAttribute("student_id", user.getId());
             role = STUDENT;
         }
 
@@ -69,7 +78,14 @@ public class Login extends HttpServlet {
         if (staffdao.isUserIdPasswordMatch(userid, password)) {
             session.setAttribute("isLogged", true);
             isSuccess = true;
-            userName = staffdao.getUserName(userid);
+
+            String firstName = staffdao.getUser(userid).getFirstName();
+            String lastName = staffdao.getUser(userid).getLastName();
+            if (firstName != null && lastName != null) {
+                userName = firstName + " " + lastName;
+            } else {
+                userName = null;
+            }
             role = STAFF;
         }
 
@@ -77,7 +93,13 @@ public class Login extends HttpServlet {
         if (facultydao.isUserIdPasswordMatch(userid, password)) {
             session.setAttribute("isLogged", true);
             isSuccess = true;
-            userName = facultydao.getUserName(userid);
+            String firstName = facultydao.getUser(userid).getFirstName();
+            String lastName = facultydao.getUser(userid).getLastName();
+            if (firstName != null && lastName != null) {
+                userName = firstName + " " + lastName;
+            } else {
+                userName = null;
+            }
             role = FACULTY;
         }
 

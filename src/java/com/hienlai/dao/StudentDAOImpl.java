@@ -5,6 +5,7 @@
  */
 package com.hienlai.dao;
 
+import com.hienlai.model.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -99,25 +100,24 @@ public class StudentDAOImpl implements StudentDAO {
     }
 
     @Override
-    public String getUserName(String userId) {
+    public User getUser(String userId) {
         System.out.println("Get Name of User");
         PreparedStatement pstmt = null;
         ResultSet resultSet = null;
         String firstName = null;
         String lastName = null;
+        String id = null;
         try {
             Statement statement = conn.createStatement();
-            pstmt = conn.prepareStatement("SELECT FIRST_NAME, LAST_NAME FROM STUDENT WHERE USERID = ?");
+            pstmt = conn.prepareStatement("SELECT FIRST_NAME, LAST_NAME, STUDENT_ID FROM STUDENT WHERE USERID = ?");
             pstmt.setString(1, userId);
             resultSet = pstmt.executeQuery();
             while (resultSet.next()) {
                 firstName = resultSet.getString("FIRST_NAME");
                 lastName = resultSet.getString("LAST_NAME");
+                id = resultSet.getString("STUDENT_ID");
             }
-            if(firstName == null && lastName == null)
-                return null;
-            else
-                return firstName + " " + lastName;
+            return new User(firstName,lastName,null,null,null,null,null,id);
 
         } catch (SQLException e) {
             e.printStackTrace();

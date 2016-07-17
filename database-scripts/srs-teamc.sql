@@ -32,10 +32,10 @@ DROP TABLE IF EXISTS `courses`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `courses` (
   `course_id` int(11) NOT NULL AUTO_INCREMENT,
-  `course_name` varchar(45) DEFAULT NULL,
+  `course_name` varchar(65) DEFAULT NULL,
   `credits` double(2,1) DEFAULT NULL,
   PRIMARY KEY (`course_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=783 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,6 +44,7 @@ CREATE TABLE `courses` (
 
 LOCK TABLES `courses` WRITE;
 /*!40000 ALTER TABLE `courses` DISABLE KEYS */;
+INSERT INTO `courses` VALUES (481,'Principles of Enterprise Web Development',3.0),(484,'Agile Dvelopment with Ruby and Rails',3.0),(486,'Mobile Application Dvelopment for the Android Platform',3.0),(782,'Web Application Development with Java',3.0);
 /*!40000 ALTER TABLE `courses` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -56,7 +57,7 @@ DROP TABLE IF EXISTS `enrollment`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `enrollment` (
   `enrollment_id` int(11) NOT NULL AUTO_INCREMENT,
-  `registration_date` datetime DEFAULT NULL,
+  `registration_date` datetime DEFAULT CURRENT_TIMESTAMP,
   `grade` decimal(3,2) DEFAULT NULL,
   `status` varchar(10) DEFAULT NULL,
   `student_id` int(11) DEFAULT NULL,
@@ -66,7 +67,7 @@ CREATE TABLE `enrollment` (
   KEY `offering_id_idx` (`offering_id`),
   CONSTRAINT `offering_id` FOREIGN KEY (`offering_id`) REFERENCES `offering` (`offering_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `student_id` FOREIGN KEY (`student_id`) REFERENCES `student` (`student_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -75,6 +76,7 @@ CREATE TABLE `enrollment` (
 
 LOCK TABLES `enrollment` WRITE;
 /*!40000 ALTER TABLE `enrollment` DISABLE KEYS */;
+INSERT INTO `enrollment` VALUES (1,'2016-07-17 00:17:48',NULL,'Active',1,1);
 /*!40000 ALTER TABLE `enrollment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -121,7 +123,7 @@ CREATE TABLE `offering` (
   `year` char(4) DEFAULT NULL,
   `location` varchar(45) DEFAULT NULL,
   `course_capacity` int(11) DEFAULT NULL,
-  `number_of_student_enrollment` int(11) DEFAULT NULL,
+  `number_of_students_enrollment` int(11) DEFAULT '0',
   `course_id` int(11) DEFAULT NULL,
   `faculty_id` int(11) DEFAULT NULL,
   `staff_id` int(11) DEFAULT NULL,
@@ -131,7 +133,7 @@ CREATE TABLE `offering` (
   KEY `faculty_id_idx` (`faculty_id`),
   CONSTRAINT `course_id` FOREIGN KEY (`course_id`) REFERENCES `courses` (`course_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `faculty_id` FOREIGN KEY (`faculty_id`) REFERENCES `faculty` (`faculty_id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -140,6 +142,7 @@ CREATE TABLE `offering` (
 
 LOCK TABLES `offering` WRITE;
 /*!40000 ALTER TABLE `offering` DISABLE KEYS */;
+INSERT INTO `offering` VALUES (1,'Spring','2016','Online',20,1,481,1,1),(2,'Spring','2016','Online',20,0,484,1,1),(3,'Spring','2016','Online',20,0,486,1,1);
 /*!40000 ALTER TABLE `offering` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -191,7 +194,7 @@ CREATE TABLE `student` (
   `password` char(8) DEFAULT NULL,
   `gpa` decimal(3,2) DEFAULT NULL,
   PRIMARY KEY (`student_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -200,7 +203,7 @@ CREATE TABLE `student` (
 
 LOCK TABLES `student` WRITE;
 /*!40000 ALTER TABLE `student` DISABLE KEYS */;
-INSERT INTO `student` VALUES (1,'332899898','Hien','Lai1','hienlai1@gmail.com','100 main street burlington, VT 05401','hienlai1','hienlai1',NULL);
+INSERT INTO `student` VALUES (1,'332899898','Hien','Lai1','hienlai1@gmail.com','100 main street burlington, VT 05401','hienlai1','hienlai1',NULL),(2,'111223333','Joe','Smith','jsmith@gmail.com','100 Main Street Burlington, VT 05408','joesmith','joesmith',NULL);
 /*!40000 ALTER TABLE `student` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -213,4 +216,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-07-08 22:54:23
+-- Dump completed on 2016-07-17  0:19:15
