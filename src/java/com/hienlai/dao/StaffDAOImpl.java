@@ -73,11 +73,7 @@ public class StaffDAOImpl implements StaffDAO {
             Statement statement = conn.createStatement();
             String sqlStatement = "DELETE FROM staff WHERE userid = ";
 
-            resultSet = statement.executeQuery(sqlStatement + userId + ";");
-
-            while (resultSet.next()) {
-                count = resultSet.getFetchSize();
-            }
+            count = statement.executeUpdate(sqlStatement + userId + ";");
 
             if (count == 1)
                 return true;
