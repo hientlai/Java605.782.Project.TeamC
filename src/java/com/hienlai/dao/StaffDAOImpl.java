@@ -27,6 +27,84 @@ public class StaffDAOImpl implements StaffDAO {
         this.conn = conn;
     }
 
+    /**
+     * Check if user is administrator or not
+     * @param userId
+     * @return boolean
+     */
+    public boolean isAdministrator(String userId) {
+        System.out.println("Check the user exists by userID");
+        ResultSet resultSet;
+        int count = 0;
+
+        try {
+            Statement statement = conn.createStatement();
+            String sqlStatement = "SELECT count(*) AS adminUser FROM staff WHERE userid = ";
+
+            resultSet = statement.executeQuery(sqlStatement + userId + ";");
+
+            while (resultSet.next()) {
+                count = resultSet.getFetchSize();
+            }
+
+            if (count == 1)
+                return true;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    /**
+     * Remove current user from staff/admin table
+     * @param userId
+     * @return boolean
+     */
+    public boolean removeAdministrator(String userId) {
+        ResultSet resultSet;
+        int count = 0;
+
+        try {
+            Statement statement = conn.createStatement();
+            String sqlStatement = "SELECT * FROM staff WHERE userid = ";
+
+            resultSet = statement.executeQuery(sqlStatement + userId + ";");
+
+            while (resultSet.next()) {
+                count = resultSet.getFetchSize();
+            }
+
+            if (count == 1) {
+                String srmAdminStatement = "INSERT INTO staff (ssn, first_name, last_name" +
+                        ", email, address, userid, password) VALUES ( ?, ?, ?, ?, ?, ?, ?)";
+                PreparedStatement preparedStatement = conn.prepareStatement(srmAdminStatement);
+                preparedStatement.setString(1, userId);
+
+                // TODO: Create more setStrings for all column names
+
+                preparedStatement.executeUpdate();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+
+    /**
+     * Add current user as admin
+     * @param userId
+     * @return
+     */
+    public boolean addAdministrator(String userId) {
+
+        return false;
+    }
+
     @Override
     public boolean isUserIdPasswordMatch(String userId, String password) {
         System.out.println("Check the staff is exist by userid and password");
