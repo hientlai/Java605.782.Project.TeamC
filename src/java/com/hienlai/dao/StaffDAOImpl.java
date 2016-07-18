@@ -6,6 +6,8 @@
 package com.hienlai.dao;
 
 import com.hienlai.model.User;
+import com.hienlai.util.JDBCDBUtil;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -63,12 +65,13 @@ public class StaffDAOImpl implements StaffDAO {
      * @return boolean
      */
     public boolean removeAdministrator(String userId) {
+
         ResultSet resultSet;
         int count = 0;
 
         try {
             Statement statement = conn.createStatement();
-            String sqlStatement = "SELECT * FROM staff WHERE userid = ";
+            String sqlStatement = "DELETE FROM staff WHERE userid = ";
 
             resultSet = statement.executeQuery(sqlStatement + userId + ";");
 
@@ -76,16 +79,8 @@ public class StaffDAOImpl implements StaffDAO {
                 count = resultSet.getFetchSize();
             }
 
-            if (count == 1) {
-                String srmAdminStatement = "INSERT INTO staff (ssn, first_name, last_name" +
-                        ", email, address, userid, password) VALUES ( ?, ?, ?, ?, ?, ?, ?)";
-                PreparedStatement preparedStatement = conn.prepareStatement(srmAdminStatement);
-                preparedStatement.setString(1, userId);
-
-                // TODO: Create more setStrings for all column names
-
-                preparedStatement.executeUpdate();
-            }
+            if (count == 1)
+                return true;
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -101,6 +96,41 @@ public class StaffDAOImpl implements StaffDAO {
      * @return
      */
     public boolean addAdministrator(String userId) {
+
+        ResultSet resultSet;
+        int count = 0;
+
+        try {
+            Statement statement = conn.createStatement();
+            String sqlStatement = "SELECT * FROM staff WHERE userid = ";
+
+            resultSet = statement.executeQuery(sqlStatement + userId + ";");
+
+            while (resultSet.next()) {
+                count = resultSet.getFetchSize();
+            }
+
+            if (count == 1) {
+                StudentDAO studentdao = new StudentDAOImpl(JDBCDBUtil.getConnection());
+                User user = studentdao.getUser(userId);
+
+                String srmAdminStatement = "INSERT INTO staff (ssn, first_name, last_name" +
+                        ", email, address, userid, password) VALUES ( ?, ?, ?, ?, ?, ?, ?)";
+                PreparedStatement preparedStatement = conn.prepareStatement(srmAdminStatement);
+                preparedStatement.setString(1, user.getSsn());
+                preparedStatement.setString(2, user.getFirstName());
+                preparedStatement.setString(3, user.getLastName());
+                preparedStatement.setString(4, user.getEmail());
+                preparedStatement.setString(5, user.getAddress());
+                preparedStatement.setString(6, userId);
+                preparedStatement.setString(7, user.getPassword());
+
+                preparedStatement.executeUpdate();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         return false;
     }
