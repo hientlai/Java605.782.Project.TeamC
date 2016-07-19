@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
 /**
  *
  * @author Hien
@@ -62,6 +61,14 @@ public class RegistrationController extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("Student_servlet");
             rd.forward(request, response);
         } else if ("Enroll".equals(requestType)) {
+            //Student enrolls into a class
+            RequestDispatcher rd = request.getRequestDispatcher("Student_servlet");
+            rd.forward(request, response);
+        } else if ("CoursesDrop".equals(requestType)) {
+            //Student enrolls into a class
+            RequestDispatcher rd = request.getRequestDispatcher("Student_servlet");
+            rd.forward(request, response);
+        } else if ("ViewGrade".equals(requestType)) {
             //Student enrolls into a class
             RequestDispatcher rd = request.getRequestDispatcher("Student_servlet");
             rd.forward(request, response);

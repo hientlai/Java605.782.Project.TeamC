@@ -5,27 +5,37 @@
  */
 package com.hienlai.dao;
 
+import com.hienlai.model.CoursesSupportBean;
+import java.util.List;
 
 /**
  *
  * @author Hien
  */
-public interface EnrollmentDAO { 
-    
+public interface EnrollmentDAO {
+
     /**
-     * 
+     *
      * @param status
      * @param student_id
      * @param offering_id
-     * @return 
+     * @return
      */
     public boolean insertEnrollment(String status, String student_id, String offering_id);
-    
+
     /**
      * check the student enrolled in class or not
+     *
      * @param studentId
      * @param offeringId
-     * @return 
+     * @return
      */
     public boolean isEnrolled(int studentId, int offeringId);
+
+    /**
+     * get list of courses with grade by student id
+     * @param studentId
+     * @return
+     */
+    public List<CoursesSupportBean> getGrades(int studentId);
 }

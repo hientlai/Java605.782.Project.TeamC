@@ -53,6 +53,7 @@ public class StudentController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession(true);
         String requestType = (request.getParameter("requesttype"));
+        int studentId =  Integer.parseInt((String)session.getAttribute("student_id"));
         if ("CoursesList".equals(requestType)) {
             RequestDispatcher rd = request.getRequestDispatcher("CoursesJSP.jsp");
             String term = request.getParameter("term");
@@ -86,7 +87,7 @@ public class StudentController extends HttpServlet {
 
             //Student register a course
             int offeringId = Integer.parseInt(request.getParameter("course"));
-            int studentId =  Integer.parseInt((String)session.getAttribute("student_id"));
+            
             int numberStudentRegistered = 0;
 
             OfferingDAO dao = new OfferingDAOImpl(JDBCDBUtil.getConnection());
@@ -108,6 +109,14 @@ public class StudentController extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("registrarcourse");
             rd.forward(request, response);
 
+        } else if ("CoursesDrop".equals(requestType)) {
+            
+        } else if ("ViewGrade".equals(requestType)) {
+            EnrollmentDAO enrDao = new EnrollmentDAOImpl(JDBCDBUtil.getConnection());
+            List<CoursesSupportBean> courses = enrDao.getGrades(studentId);
+            request.setAttribute("courses", courses);
+            RequestDispatcher rd = request.getRequestDispatcher("viewgrades.jsp");
+            rd.forward(request, response);
         }
     }
 

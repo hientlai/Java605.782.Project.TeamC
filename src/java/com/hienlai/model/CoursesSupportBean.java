@@ -17,6 +17,8 @@ public class CoursesSupportBean implements Serializable {
     private String courseName;
     private int offeringId;
     private int courseCapacity;
+    private double grade;
+    private double credits;
 
     public CoursesSupportBean(int courseId, String courseName, int offeringId) {
         this.courseId = courseId;
@@ -31,6 +33,26 @@ public class CoursesSupportBean implements Serializable {
         this.courseCapacity = courseCapacity;
     }
 
+    public CoursesSupportBean() {
+
+    }
+
+    public double getGrade() {
+        return grade;
+    }
+
+    public void setGrade(double grade) {
+        this.grade = grade;
+    }
+
+    public double getCredits() {
+        return credits;
+    }
+
+    public void setCredits(double credits) {
+        this.credits = credits;
+    }
+
     public int getCourseCapacity() {
         return courseCapacity;
     }
@@ -38,7 +60,7 @@ public class CoursesSupportBean implements Serializable {
     public void setCourseCapacity(int courseCapacity) {
         this.courseCapacity = courseCapacity;
     }
-    
+
     public int getOfferingId() {
         return offeringId;
     }
