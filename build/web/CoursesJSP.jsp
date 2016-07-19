@@ -62,7 +62,7 @@
                         <br/>
                         <br/>
 
-                        <input type="submit" class="bold" name="requesttype" value="Add">
+                        <input type="submit" class="bold" name="requesttype" value="Enroll">
 
                         <br/>
                         <br/>

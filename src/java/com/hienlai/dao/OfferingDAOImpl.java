@@ -47,7 +47,7 @@ public class OfferingDAOImpl implements OfferingDAO {
                 course_id = resultSet.getInt("course_id");
                 course_name = resultSet.getString("course_name");
                 offering_id =  resultSet.getInt("offering_id");
-                CoursesSupportBean bean = new CoursesSupportBean(course_id, course_name, offering_id);
+                CoursesSupportBean bean = new CoursesSupportBean(course_id, course_name,offering_id);
                 courses.add(bean);
             }
 
@@ -139,16 +139,18 @@ public class OfferingDAOImpl implements OfferingDAO {
        System.out.println("Retrieve courses lists from database with offeringId: " + offeringId);
         PreparedStatement pstmt = null;
         ResultSet resultSet = null;
-        int course_id;
-        String course_name;
+        int courseId;
+        String courseName;
+        int courseCapacity;
         try {
-            pstmt = conn.prepareStatement("SELECT C.COURSE_ID, C.COURSE_NAME, O.OFFERING_ID FROM COURSES AS C JOIN OFFERING AS O on C.COURSE_ID = O.COURSE_ID WHERE O.OFFERING_ID = ?");
+            pstmt = conn.prepareStatement("SELECT C.COURSE_ID, C.COURSE_NAME, O.OFFERING_ID,O.COURSE_CAPACITY FROM COURSES AS C JOIN OFFERING AS O on C.COURSE_ID = O.COURSE_ID WHERE O.OFFERING_ID = ?");
             pstmt.setInt(1, offeringId);
             resultSet = pstmt.executeQuery();
             while (resultSet.next()) {
-                course_id = resultSet.getInt("course_id");
-                course_name = resultSet.getString("course_name");
-                CoursesSupportBean bean = new CoursesSupportBean(course_id, course_name, offeringId);
+                courseId = resultSet.getInt("COURSE_ID");
+                courseName = resultSet.getString("COURSE_NAME");
+                courseCapacity = resultSet.getInt("COURSE_CAPACITY");
+                CoursesSupportBean bean = new CoursesSupportBean(courseId, courseName, offeringId,courseCapacity);
                 return bean;
             }
 

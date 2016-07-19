@@ -5,11 +5,8 @@
  */
 package com.hienlai.controller;
 
-import com.hienlai.model.CoursesSupportBean;
-import com.hienlai.util.JDBCDBUtil;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,23 +14,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.hienlai.dao.CourseDAO;
-import com.hienlai.dao.CourseDAOImpl;
-import com.hienlai.dao.EnrollmentDAO;
-import com.hienlai.dao.EnrollmentDAOImpl;
-import com.hienlai.dao.OfferingDAO;
-import com.hienlai.dao.OfferingDAOImpl;
-import javax.servlet.annotation.WebInitParam;
+
 
 /**
  *
  * @author Hien
  */
-@WebServlet(name = "RegistrationController_servlet", urlPatterns = {"/RegistrationController_servlet"}, initParams = {
-    @WebInitParam(name = "coursecapacity", value = "8")})
+@WebServlet(name = "RegistrationController_servlet", urlPatterns = {"/RegistrationController_servlet"})
 public class RegistrationController extends HttpServlet {
 
     /**
@@ -51,9 +38,6 @@ public class RegistrationController extends HttpServlet {
         HttpSession session = request.getSession(true);
         String requestType = (request.getParameter("requesttype"));
 
-        OfferingDAO offeringDao = new OfferingDAOImpl(JDBCDBUtil.getConnection());
-        
-        CourseDAO courseDao = new CourseDAOImpl(JDBCDBUtil.getConnection());;
         if ("Submit".equals(requestType)) {
             //redirect it to Login_servlet
             RequestDispatcher rd = request.getRequestDispatcher("Login_servlet");
@@ -74,33 +58,13 @@ public class RegistrationController extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("CoursesJSP.jsp");
             rd.forward(request, response);
         } else if ("CoursesList".equals(requestType)) {
-            RequestDispatcher rd = request.getRequestDispatcher("CoursesJSP.jsp");
-            String term = request.getParameter("term");
-            String year = request.getParameter("year");
-            List<CoursesSupportBean> courses = offeringDao.retrieveOfferingByTermYear(term, year);
-            System.out.println("courses np " + courses.size());
-            Gson gson = new Gson();
-            JsonObject myObj = new JsonObject();
-            PrintWriter out = response.getWriter();
-            response.setContentType("text/html");
-            response.setHeader("Cache-control", "no-cache, no-store");
-            response.setHeader("Pragma", "no-cache");
-            response.setHeader("Expires", "-1");
-            response.setHeader("Access-Control-Allow-Origin", "*");
-            response.setHeader("Access-Control-Allow-Methods", "POST");
-            response.setHeader("Access-Control-Allow-Headers", "Content-Type");
-            response.setHeader("Access-Control-Max-Age", "86400");
-
-            if (courses == null || courses.isEmpty()) {
-                myObj.addProperty("success", false);
-            } else {
-                myObj.addProperty("success", true);
-                JsonElement coursesObj = gson.toJsonTree(courses);
-                myObj.add("courses", coursesObj);
-
-            }
-            out.println(myObj.toString());
-            out.close();
+            //Student views a course list in order to do enrollment
+            RequestDispatcher rd = request.getRequestDispatcher("Student_servlet");
+            rd.forward(request, response);
+        } else if ("Enroll".equals(requestType)) {
+            //Student enrolls into a class
+            RequestDispatcher rd = request.getRequestDispatcher("Student_servlet");
+            rd.forward(request, response);
         } else if ("Logout".equals(requestType)) {
             //redirect it to Logout
             session.invalidate();
@@ -115,28 +79,6 @@ public class RegistrationController extends HttpServlet {
                 out.println("</body>");
                 out.println("</html>");
             }
-
-        } else if ("Add".equals(requestType)) {
-            
-            //Student register a course
-            int offeringId = Integer.parseInt(request.getParameter("course"));
-            
-            int numberStudentRegistered = 0;
-
-            OfferingDAO dao = new OfferingDAOImpl(JDBCDBUtil.getConnection());
-            EnrollmentDAO enrDao = new EnrollmentDAOImpl(JDBCDBUtil.getConnection());
-            CoursesSupportBean course = dao.retrieveCourse(offeringId);
-            numberStudentRegistered = dao.retrieveStudentsRegistered(offeringId);
-            if(numberStudentRegistered < Integer.parseInt(getServletConfig().getInitParameter("coursecapacity"))){
-                dao.updateNumberStudentsRegistered(offeringId, numberStudentRegistered + 1 );
-                enrDao.insertEnrollment("Active", (String)session.getAttribute("student_id"), offeringId + "");
-                request.setAttribute("message", "You have been registered to " + offeringId + " " +  course.getCourse_name() );
-            }else{
-                request.setAttribute("error", "Sorry, the registration to this course has been closed based on availability");
-            }
-
-            RequestDispatcher rd = request.getRequestDispatcher("registrarcourse");
-            rd.forward(request, response);
 
         }
 

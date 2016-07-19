@@ -13,39 +13,54 @@ import java.io.Serializable;
  */
 public class CoursesSupportBean implements Serializable {
 
-    private int course_id;
-    private String course_name;
-    private int offering_id;
+    private int courseId;
+    private String courseName;
+    private int offeringId;
+    private int courseCapacity;
 
-    public CoursesSupportBean(int course_id, String course_name,int offering_id) {
-        this.course_id = course_id;
-        this.course_name = course_name;
-        this.offering_id = offering_id;
+    public CoursesSupportBean(int courseId, String courseName, int offeringId) {
+        this.courseId = courseId;
+        this.courseName = courseName;
+        this.offeringId = offeringId;
     }
 
-    public int getOffering_id() {
-        return offering_id;
+    public CoursesSupportBean(int courseId, String courseName, int offeringId, int courseCapacity) {
+        this.courseId = courseId;
+        this.courseName = courseName;
+        this.offeringId = offeringId;
+        this.courseCapacity = courseCapacity;
     }
 
-    public void setOffering_id(int offering_id) {
-        this.offering_id = offering_id;
+    public int getCourseCapacity() {
+        return courseCapacity;
     }
 
+    public void setCourseCapacity(int courseCapacity) {
+        this.courseCapacity = courseCapacity;
+    }
     
-    public int getCourse_id() {
-        return course_id;
+    public int getOfferingId() {
+        return offeringId;
     }
 
-    public String getCourse_name() {
-        return course_name;
+    public void setOfferingId(int offeringId) {
+        this.offeringId = offeringId;
     }
 
-    public void setCourse_id(int course_id) {
-        this.course_id = course_id;
+    public int getCourseId() {
+        return courseId;
     }
 
-    public void setCourse_name(String course_name) {
-        this.course_name = course_name;
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseId(int courseId) {
+        this.courseId = courseId;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 
 }

@@ -14,7 +14,7 @@ $("#year, #term").change(function () {
                 $("#coursedropdown").html("");
                 var selectStr = "<select name='course'>";
                 $.each( data.courses, function( key, value ) {
-                    selectStr += "<option value='" + value.offering_id + "'>" + value.course_id + " - " + value.course_name + "</option>";
+                    selectStr += "<option value='" + value.offeringId + "'>" + value.courseId + " - " + value.courseName + "</option>";
                 });
                 selectStr += "</select>";
                 $("#coursedropdown").append(selectStr);
