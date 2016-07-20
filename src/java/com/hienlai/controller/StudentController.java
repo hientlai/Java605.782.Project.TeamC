@@ -52,14 +52,17 @@ public class StudentController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession(true);
-        String requestType = (request.getParameter("requesttype"));
-        int studentId =  Integer.parseInt((String)session.getAttribute("student_id"));
+        String requestType = request.getParameter("requesttype");
+        OfferingDAO dao = new OfferingDAOImpl(JDBCDBUtil.getConnection());
+        EnrollmentDAO enrDao = new EnrollmentDAOImpl(JDBCDBUtil.getConnection());
+        int studentId = Integer.parseInt((String) session.getAttribute("student_id"));
+
         if ("CoursesList".equals(requestType)) {
+            //return json string of list courses for ajax fuction
             RequestDispatcher rd = request.getRequestDispatcher("CoursesJSP.jsp");
             String term = request.getParameter("term");
             String year = request.getParameter("year");
             List<CoursesSupportBean> courses = offeringDao.retrieveOfferingByTermYear(term, year);
-            System.out.println("courses np " + courses.size());
             Gson gson = new Gson();
             JsonObject myObj = new JsonObject();
             PrintWriter out = response.getWriter();
@@ -84,20 +87,16 @@ public class StudentController extends HttpServlet {
             out.close();
 
         } else if ("Enroll".equals(requestType)) {
-
-            //Student register a course
+            //Student enroll a course
             int offeringId = Integer.parseInt(request.getParameter("course"));
-            
             int numberStudentRegistered = 0;
 
-            OfferingDAO dao = new OfferingDAOImpl(JDBCDBUtil.getConnection());
-            EnrollmentDAO enrDao = new EnrollmentDAOImpl(JDBCDBUtil.getConnection());
             CoursesSupportBean course = dao.retrieveCourse(offeringId);
             numberStudentRegistered = dao.retrieveStudentsRegistered(offeringId);
             if (numberStudentRegistered < course.getCourseCapacity()) {
-                if(enrDao.isEnrolled(studentId, offeringId)){
+                if (enrDao.isEnrolled(studentId, offeringId)) {
                     request.setAttribute("error", "You already enroll this course.");
-                }else{
+                } else {
                     dao.updateNumberStudentsRegistered(offeringId, numberStudentRegistered + 1);
                     enrDao.insertEnrollment("Active", (String) session.getAttribute("student_id"), offeringId + "");
                     request.setAttribute("message", "You have been registered to " + offeringId + " " + course.getCourseName());
@@ -109,13 +108,35 @@ public class StudentController extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("registrarcourse");
             rd.forward(request, response);
 
-        } else if ("CoursesDrop".equals(requestType)) {
-            
-        } else if ("ViewGrade".equals(requestType)) {
-            EnrollmentDAO enrDao = new EnrollmentDAOImpl(JDBCDBUtil.getConnection());
-            List<CoursesSupportBean> courses = enrDao.getGrades(studentId);
+        } else if ("CoursesDrop".equals(requestType) || "ViewGrade".equals(requestType)) {
+            List<CoursesSupportBean> courses = enrDao.getEnrollments(studentId);
             request.setAttribute("courses", courses);
-            RequestDispatcher rd = request.getRequestDispatcher("viewgrades.jsp");
+            if ("CoursesDrop".equals(requestType)) {
+                //show list courses that allows to drop
+                RequestDispatcher rd = request.getRequestDispatcher("dropcourse.jsp");
+                rd.forward(request, response);
+            } else if ("ViewGrade".equals(requestType)) {
+                //show grades of courses
+                RequestDispatcher rd = request.getRequestDispatcher("viewgrades.jsp");
+                rd.forward(request, response);
+            }
+        } else if ("Drop".equals(requestType)) {
+            //Drop class
+            int enrollmentId = Integer.parseInt(request.getParameter("enrollmentId"));
+            int offeringId = enrDao.getEnrollment(enrollmentId).getOfferingId();
+
+            //deduct 1 from the number of student enrollment
+            int numberOfStudentEnrollment = offeringDao.retrieveStudentsRegistered(offeringId);
+            offeringDao.updateNumberStudentsRegistered(offeringId, numberOfStudentEnrollment - 1);
+
+            //Update the status of the record enrollment to Drop from enrollment table
+            enrDao.updateStatusEnrollment(enrollmentId,"Drop");
+            
+            //get new list of enrollment classes
+            List<CoursesSupportBean> courses = enrDao.getEnrollments(studentId);
+            request.setAttribute("courses", courses);
+            
+            RequestDispatcher rd = request.getRequestDispatcher("dropcourse.jsp");
             rd.forward(request, response);
         }
     }

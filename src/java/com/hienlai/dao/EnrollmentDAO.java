@@ -37,5 +37,19 @@ public interface EnrollmentDAO {
      * @param studentId
      * @return
      */
-    public List<CoursesSupportBean> getGrades(int studentId);
+    public List<CoursesSupportBean> getEnrollments(int studentId);
+    
+    /**
+     * Delete enrollment
+     * @param enrollmentId 
+     */
+    public void updateStatusEnrollment(int enrollmentId, String status);
+    
+    
+    /**
+     * get enrollment
+     * @param enrollmentId
+     * @return 
+     */
+    public CoursesSupportBean getEnrollment(int enrollmentId);
 }

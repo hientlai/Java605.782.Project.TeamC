@@ -80,7 +80,7 @@ public class EnrollmentDAOImpl implements EnrollmentDAO {
                 return false;
             }
         } catch (SQLException ex) {
-            System.out.println("Insert the enrollment fail");
+            System.out.println("Check student enrolls in the class fail");
             Logger.getLogger(EnrollmentDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             if (pstmt != null) {
@@ -95,13 +95,13 @@ public class EnrollmentDAOImpl implements EnrollmentDAO {
     }
 
     @Override
-    public List<CoursesSupportBean> getGrades(int studentId) {
+    public List<CoursesSupportBean> getEnrollments(int studentId) {
         System.out.println("Get list of courses where studentId =: " + studentId);
         PreparedStatement pstmt = null;
         ResultSet resultSet = null;
         List<CoursesSupportBean> gradeList = new ArrayList<CoursesSupportBean>(5);
         try {
-            pstmt = conn.prepareStatement("SELECT C.CREDITS, E.GRADE, C.COURSE_ID, C.COURSE_NAME FROM OFFERING AS O JOIN COURSES AS C  on C.COURSE_ID = O.COURSE_ID  JOIN ENROLLMENT AS E ON E.OFFERING_ID=O.OFFERING_ID WHERE E.STUDENT_ID = ?");
+            pstmt = conn.prepareStatement("SELECT E.ENROLLMENT_ID, E.REGISTRATION_DATE, C.CREDITS, E.GRADE, C.COURSE_ID, C.COURSE_NAME FROM OFFERING AS O JOIN COURSES AS C  on C.COURSE_ID = O.COURSE_ID  JOIN ENROLLMENT AS E ON E.OFFERING_ID=O.OFFERING_ID WHERE E.STATUS='Active' AND E.STUDENT_ID = ?");
             pstmt.setInt(1, studentId);
             resultSet = pstmt.executeQuery();
             while (resultSet.next()) {
@@ -110,12 +110,13 @@ public class EnrollmentDAOImpl implements EnrollmentDAO {
                 bean.setCourseName(resultSet.getString("COURSE_NAME"));
                 bean.setGrade(resultSet.getDouble("GRADE"));
                 bean.setCredits(resultSet.getInt("CREDITS"));
-
+                bean.setEnrollmentDate(resultSet.getDate("REGISTRATION_DATE"));
+                bean.setEnrollmentId(resultSet.getInt("ENROLLMENT_ID"));
                 gradeList.add(bean);
             }
 
         } catch (SQLException ex) {
-            System.out.println("Insert the enrollment fail");
+            System.out.println("Get list of enrollments fail");
             Logger.getLogger(EnrollmentDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             if (pstmt != null) {
@@ -129,4 +130,62 @@ public class EnrollmentDAOImpl implements EnrollmentDAO {
 
         return gradeList;
     }
+
+    @Override
+    public void updateStatusEnrollment(int enrollmentId, String status) {
+        System.out.println("Update the enrollment with enrollment id: " + enrollmentId);
+        PreparedStatement pstmt = null;
+        try {
+            pstmt = conn.prepareStatement("UPDATE ENROLLMENT SET STATUS = ? WHERE ENROLLMENT_ID = ?");
+            pstmt.setString(1, status);
+            pstmt.setInt(2, enrollmentId);
+            if (pstmt.executeUpdate() == 1) {
+                System.out.println("Update the enrollment successfully");
+            } else {
+                System.out.println("Update the enrollment fail");
+            }
+
+        } catch (SQLException ex) {
+            System.out.println("Update the enrollment fail");
+            Logger.getLogger(EnrollmentDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(EnrollmentDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+
+    }
+
+    @Override
+    public CoursesSupportBean getEnrollment(int enrollmentId) {
+        System.out.println("Get the enrollment with enrollment id: " + enrollmentId);
+        PreparedStatement pstmt = null;
+        try {
+            pstmt = conn.prepareStatement("SELECT * FROM ENROLLMENT WHERE ENROLLMENT_ID = ? AND STATUS = 'Active'");
+            pstmt.setInt(1, enrollmentId);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                CoursesSupportBean bean = new CoursesSupportBean();
+                bean.setOfferingId(rs.getInt("OFFERING_ID"));
+                return bean;
+            }
+        } catch (SQLException ex) {
+            System.out.println("Get the enrollment fail");
+            Logger.getLogger(EnrollmentDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(EnrollmentDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+        return null;
+    }
+
 }

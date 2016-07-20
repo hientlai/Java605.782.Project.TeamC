@@ -6,6 +6,7 @@
 package com.hienlai.model;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 /**
  *
@@ -19,6 +20,8 @@ public class CoursesSupportBean implements Serializable {
     private int courseCapacity;
     private double grade;
     private double credits;
+    private Date enrollmentDate;
+    private int enrollmentId;
 
     public CoursesSupportBean(int courseId, String courseName, int offeringId) {
         this.courseId = courseId;
@@ -35,6 +38,22 @@ public class CoursesSupportBean implements Serializable {
 
     public CoursesSupportBean() {
 
+    }
+
+    public int getEnrollmentId() {
+        return enrollmentId;
+    }
+
+    public void setEnrollmentId(int enrollmentId) {
+        this.enrollmentId = enrollmentId;
+    }
+
+    public Date getEnrollmentDate() {
+        return enrollmentDate;
+    }
+
+    public void setEnrollmentDate(Date enrollmentDate) {
+        this.enrollmentDate = enrollmentDate;
     }
 
     public double getGrade() {
