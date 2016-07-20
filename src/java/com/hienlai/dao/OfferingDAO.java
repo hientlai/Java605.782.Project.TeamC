@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package java.com.hienlai.dao;
+package com.hienlai.dao;
 
-import java.com.hienlai.model.CoursesSupportBean;
-
+import com.hienlai.model.CoursesSupportBean;
 import java.util.List;
 
 /**
- *
  * @author Hien
  */
 public interface OfferingDAO {
@@ -20,17 +18,17 @@ public interface OfferingDAO {
      *
      * @return
      */
-    public List<CoursesSupportBean> retrieveOfferingByTermYear(String term, String year);
+    List<CoursesSupportBean> retrieveOfferingByTermYear(String term, String year);
 
-    
-        /**
+
+    /**
      * retrieve students registered
      *
      * @param courseId
      * @return
      */
-    public int retrieveStudentsRegistered(int offeringId);
-    
+    int retrieveStudentsRegistered(int offeringId);
+
     /**
      * update number student registered
      *
@@ -38,12 +36,13 @@ public interface OfferingDAO {
      * @param numberStudentsRegistered
      * @return
      */
-    public boolean updateNumberStudentsRegistered(int offeringId, int numberStudentsRegistered);
+    boolean updateNumberStudentsRegistered(int offeringId, int numberStudentsRegistered);
 
     /**
      * Retrieve offering by offering id
+     *
      * @param offeringId
-     * @return 
+     * @return
      */
-    public CoursesSupportBean retrieveCourse(int offeringId);
+    CoursesSupportBean retrieveCourse(int offeringId);
 }

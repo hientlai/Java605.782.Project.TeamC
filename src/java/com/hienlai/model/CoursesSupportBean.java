@@ -3,12 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package java.com.hienlai.model;
+package com.hienlai.model;
 
 import java.io.Serializable;
 
 /**
- *
  * @author Hien
  */
 public class CoursesSupportBean implements Serializable {
@@ -17,7 +16,7 @@ public class CoursesSupportBean implements Serializable {
     private String course_name;
     private int offering_id;
 
-    public CoursesSupportBean(int course_id, String course_name,int offering_id) {
+    public CoursesSupportBean(int course_id, String course_name, int offering_id) {
         this.course_id = course_id;
         this.course_name = course_name;
         this.offering_id = offering_id;
@@ -31,7 +30,7 @@ public class CoursesSupportBean implements Serializable {
         this.offering_id = offering_id;
     }
 
-    
+
     public int getCourse_id() {
         return course_id;
     }

@@ -3,12 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package java.com.hienlai.dao;
+package com.hienlai.dao;
 
-import java.com.hienlai.model.User;
+import com.hienlai.model.User;
 
 /**
- *
  * @author Hien
  */
 public interface UserDAO {
@@ -20,7 +19,7 @@ public interface UserDAO {
      * @param password
      * @return
      */
-    public boolean isUserIdPasswordMatch(String userId, String password);
+    boolean isUserIdPasswordMatch(String userId, String password);
 
     /**
      * get user full name
@@ -28,7 +27,7 @@ public interface UserDAO {
      * @param userId
      * @return
      */
-    public User getUser(String userId);
+    User getUser(String userId);
 
     /**
      * insert student to database
@@ -42,6 +41,6 @@ public interface UserDAO {
      * @param password
      * @return
      */
-    public boolean insert(String firstName, String lastName, String ssn, String email, String address, String userId, String password);
+    boolean insert(String firstName, String lastName, String ssn, String email, String address, String userId, String password);
 
 }

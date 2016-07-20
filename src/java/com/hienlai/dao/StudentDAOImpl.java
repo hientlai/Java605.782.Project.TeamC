@@ -3,16 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package java.com.hienlai.dao;
+package com.hienlai.dao;
 
-import java.com.hienlai.model.User;
-
+import com.hienlai.model.User;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
  * @author Hien
  */
 public class StudentDAOImpl implements StudentDAO {
@@ -39,11 +37,7 @@ public class StudentDAOImpl implements StudentDAO {
             while (resultSet.next()) {
                 count = resultSet.getInt("nost");
             }
-            if (count > 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return count > 0;
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -77,10 +71,7 @@ public class StudentDAOImpl implements StudentDAO {
             pstmt.setString(7, password);
 
             int count = pstmt.executeUpdate();
-            if(count == 1)
-                return true;
-            else 
-                return false;
+            return count == 1;
         } catch (SQLException ex) {
             Logger.getLogger(StudentDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -113,7 +104,7 @@ public class StudentDAOImpl implements StudentDAO {
                 firstName = resultSet.getString("FIRST_NAME");
                 lastName = resultSet.getString("LAST_NAME");
                 id = resultSet.getString("STUDENT_ID");
-                return new User(firstName,lastName,null,null,null,null,null,id);
+                return new User(firstName, lastName, null, null, null, null, null, id);
             }
             return null;
 

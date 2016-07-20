@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package java.com.hienlai.dao;
+package com.hienlai.dao;
 
 
-import java.com.hienlai.model.CoursesSupportBean;
-
+import com.hienlai.model.CoursesSupportBean;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +14,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
  * @author Hien
  */
 public class CourseDAOImpl implements CourseDAO {
@@ -42,7 +40,7 @@ public class CourseDAOImpl implements CourseDAO {
             while (resultSet.next()) {
                 courseId = resultSet.getInt("courseId");
                 course_name = resultSet.getString("course_name");
-                CoursesSupportBean bean = new CoursesSupportBean(courseId, course_name,0);
+                CoursesSupportBean bean = new CoursesSupportBean(courseId, course_name, 0);
                 courses.add(bean);
             }
 
@@ -79,7 +77,7 @@ public class CourseDAOImpl implements CourseDAO {
             while (resultSet.next()) {
                 courseId = resultSet.getInt("course_id");
                 course_name = resultSet.getString("course_name");
-                bean = new CoursesSupportBean(courseId, course_name,0);
+                bean = new CoursesSupportBean(courseId, course_name, 0);
             }
 
             return bean;
@@ -114,11 +112,7 @@ public class CourseDAOImpl implements CourseDAO {
             while (resultSet.next()) {
                 count = resultSet.getInt("nost");
             }
-            if (count > 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return count > 0;
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -145,14 +139,14 @@ public class CourseDAOImpl implements CourseDAO {
             pstmt = conn.prepareStatement("INSERT INTO COURSES (COURSEID, COURSE_NAME) VALUES (?, ?)");
             pstmt.setInt(1, courseId);
             pstmt.setString(2, courseName);
-            
-            if(pstmt.executeUpdate() == 1)
+
+            if (pstmt.executeUpdate() == 1)
                 System.out.println("Insert the course id: " + courseId + " successfully");
-            else 
+            else
                 System.out.println("Insert the course id: " + courseId + " fail");
-            
+
         } catch (SQLException ex) {
-             System.out.println("Insert the course id: " + courseId + " fail");
+            System.out.println("Insert the course id: " + courseId + " fail");
             Logger.getLogger(CourseDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             if (pstmt != null) {

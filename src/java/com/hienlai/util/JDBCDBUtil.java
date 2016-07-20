@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package java.com.hienlai.util;
+package com.hienlai.util;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,7 +21,7 @@ public class JDBCDBUtil {
 
     private static Connection conn;
 
-    public static Connection getConnection(){
+    public static Connection getConnection() {
         if (conn != null) {
             return conn;
         }
@@ -34,10 +34,10 @@ public class JDBCDBUtil {
             String url = properties.getProperty("url");
             String user = properties.getProperty("user");
             String pwd = properties.getProperty("password");
-            
-                Class.forName(driver);
-                conn = (Connection) DriverManager.getConnection(url, user, pwd);
-                System.out.println("Connected to the database");
+
+            Class.forName(driver);
+            conn = DriverManager.getConnection(url, user, pwd);
+            System.out.println("Connected to the database");
         } catch (IOException | ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }

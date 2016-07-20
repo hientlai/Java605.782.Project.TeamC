@@ -3,17 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package java.com.hienlai.dao;
+package com.hienlai.dao;
 
-import java.com.hienlai.model.User;
-import java.com.hienlai.util.JDBCDBUtil;
-
+import com.hienlai.model.User;
+import com.hienlai.util.JDBCDBUtil;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
  * @author Hien
  */
 public class StaffDAOImpl implements StaffDAO {
@@ -27,6 +25,7 @@ public class StaffDAOImpl implements StaffDAO {
 
     /**
      * Check if user is administrator or not
+     *
      * @param userId
      * @return boolean
      */
@@ -57,6 +56,7 @@ public class StaffDAOImpl implements StaffDAO {
 
     /**
      * Remove current user from staff/admin table
+     *
      * @param userId
      * @return boolean
      */
@@ -84,6 +84,7 @@ public class StaffDAOImpl implements StaffDAO {
 
     /**
      * Add current user as admin
+     *
      * @param userId
      * @return
      */
@@ -142,11 +143,7 @@ public class StaffDAOImpl implements StaffDAO {
             while (resultSet.next()) {
                 count = resultSet.getInt("nost");
             }
-            if (count > 0) {
-                return true;
-            } else {
-                return false;
-            }
+            return count > 0;
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -180,10 +177,7 @@ public class StaffDAOImpl implements StaffDAO {
             pstmt.setString(7, password);
 
             int count = pstmt.executeUpdate();
-            if(count == 1)
-                return true;
-            else 
-                return false;
+            return count == 1;
         } catch (SQLException ex) {
             Logger.getLogger(StaffDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
@@ -214,9 +208,9 @@ public class StaffDAOImpl implements StaffDAO {
             while (resultSet.next()) {
                 firstName = resultSet.getString("FIRST_NAME");
                 lastName = resultSet.getString("LAST_NAME");
-                return new User(firstName,lastName,null,null,null,null,null,null);
+                return new User(firstName, lastName, null, null, null, null, null, null);
             }
-             
+
             return null;
         } catch (SQLException e) {
             e.printStackTrace();

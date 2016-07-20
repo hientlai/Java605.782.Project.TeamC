@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package java.com.hienlai.dao;
+package com.hienlai.dao;
 
-import java.com.hienlai.model.CoursesSupportBean;
-
+import com.hienlai.model.CoursesSupportBean;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +13,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
  * @author Hien
  */
 public class OfferingDAOImpl implements OfferingDAO {
@@ -43,7 +41,7 @@ public class OfferingDAOImpl implements OfferingDAO {
             while (resultSet.next()) {
                 course_id = resultSet.getInt("course_id");
                 course_name = resultSet.getString("course_name");
-                offering_id =  resultSet.getInt("offering_id");
+                offering_id = resultSet.getInt("offering_id");
                 CoursesSupportBean bean = new CoursesSupportBean(course_id, course_name, offering_id);
                 courses.add(bean);
             }
@@ -66,7 +64,7 @@ public class OfferingDAOImpl implements OfferingDAO {
         return null;
     }
 
-        @Override
+    @Override
     public int retrieveStudentsRegistered(int offeringId) {
         System.out.println("Retrieve the number of student registered on the specific course");
         PreparedStatement pstmt = null;
@@ -133,7 +131,7 @@ public class OfferingDAOImpl implements OfferingDAO {
 
     @Override
     public CoursesSupportBean retrieveCourse(int offeringId) {
-       System.out.println("Retrieve courses lists from database with offeringId: " + offeringId);
+        System.out.println("Retrieve courses lists from database with offeringId: " + offeringId);
         PreparedStatement pstmt = null;
         ResultSet resultSet = null;
         int course_id;

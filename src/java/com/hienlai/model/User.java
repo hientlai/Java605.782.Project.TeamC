@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package java.com.hienlai.model;
+package com.hienlai.model;
 
 /**
- *
  * @author Hien
  */
 public class User {
@@ -30,7 +29,7 @@ public class User {
         this.password = password;
         this.id = id;
     }
-    
+
     public String getId() {
         return id;
     }
