@@ -43,7 +43,7 @@ public class RegistrationController extends HttpServlet {
             rd.forward(request, response);
         } else if ("Register".equals(requestType)) {
             //redirect it to Registration Form A
-            RequestDispatcher rd = request.getRequestDispatcher("registrationFormA.html");
+            RequestDispatcher rd = request.getRequestDispatcher("registrationFormA.jsp");
             rd.forward(request, response);
         } else if ("Continue".equals(requestType)) {
             //redirect it to Registration_servlet
@@ -72,23 +72,15 @@ public class RegistrationController extends HttpServlet {
             //Student enrolls into a class
             RequestDispatcher rd = request.getRequestDispatcher("Student_servlet");
             rd.forward(request, response);
+        } else if ("StudentHome".equals(requestType)) {
+            RequestDispatcher rd = request.getRequestDispatcher("studentwelcome.jsp");
+            rd.forward(request, response);
         } else if ("Logout".equals(requestType)) {
             //redirect it to Logout
             session.invalidate();
-            try (PrintWriter out = response.getWriter()) {
-                out.println("<!DOCTYPE html>");
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Servlet Login Fail</title>");
-                out.println("</head>");
-                out.println("<body>");
-                out.println("<h2><font color=\"blue\">You have logged out successfully.</font></h2>");
-                out.println("</body>");
-                out.println("</html>");
-            }
-
+            RequestDispatcher rd = request.getRequestDispatcher("login.jsp");
+            rd.forward(request, response);
         }
-
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

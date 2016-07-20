@@ -68,7 +68,7 @@ public class Registration extends HttpServlet {
             session.setAttribute("role", role);
 
             //redirect to Form B
-            RequestDispatcher rd = request.getRequestDispatcher("registrationFormB.html");
+            RequestDispatcher rd = request.getRequestDispatcher("registrationFormB.jsp");
             rd.forward(request, response);
         } else if ("RegisterFormB".equals(requesttype)) {
             //process for Form B
@@ -90,7 +90,9 @@ public class Registration extends HttpServlet {
                 if (dao.getUser(userid) == null) {
                     isInserted = dao.insert(firstname, lastname, ssn, email, address, userid, password);
                     if (isInserted) {
-                        Utils.showStudentWelcomePage(firstname + " " + lastname, response);
+                        session.setAttribute("userName", firstname + " " + lastname);
+                        RequestDispatcher rd = request.getRequestDispatcher("studentwelcome.jsp");
+                        rd.forward(request, response);
                     }
                 } else {
                     //Check if the user is already exist

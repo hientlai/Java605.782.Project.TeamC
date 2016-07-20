@@ -15,58 +15,6 @@ import javax.servlet.http.HttpServletResponse;
  */
 public class Utils {
 
-    public static void showStudentWelcomePage(String userName, HttpServletResponse response) throws IOException {
-        String welcomePage = "<!DOCTYPE html>\n"
-                + "<html>\n"
-                + "    <head>\n"
-                + "        <meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\n"
-                + "        <title> Hien Lai's Assignment 3 </title>\n"
-                + "        <link href=\"Styles/main.css\" rel=\"stylesheet\" type=\"text/css\" />\n"
-                + "    </head>\n"
-                + "    <body>\n"
-                + "        <div class=\"top\">\n"
-                + "            <header id=\"branding\" role=\"banner\">\n"
-                + "                <img id=\"logo\" src=\"Images/newlogo.png\">	\n"
-                + "            </header>\n"
-                + "        </div>\n"
-                + "\n"
-                + "        <div class=\"leftmenu\">\n"
-                + "            <br>\n"
-                + "        </div>\n"
-                + "\n"
-                + "        <div class =\"main\">\n"
-                + "            <form id=\"welcomeForm\" action=\"RegistrationController_servlet\" method=\"post\">\n"
-                + "                <h2> Welcome to the site,  " + userName + "</h2>\n"
-                + "                \n"
-                + "                <h4>Select your next action:</h4>\n"
-                + "                <input type=\"radio\" name=\"requesttype\" accesskey=\"r\" value=\"CoursesRegister\" checked> <u>R</u>egister the course<br/>\n"
-                + "                <input type=\"radio\" name=\"requesttype\" accesskey=\"r\" value=\"CoursesDrop\" checked> <u>D</u>rop the course<br/>\n"
-                + "                <input type=\"radio\" name=\"requesttype\" accesskey=\"r\" value=\"ViewGrade\" checked> <u>V</u>iew grade<br/>\n"
-                + "                <input type=\"radio\" name=\"requesttype\" accesskey=\"o\" value=\"Logout\"> L<u>o</u>gout \n"
-                + "                <br/>\n"
-                + "                <br/>\n"
-                + "                <button type=\"submit\" name=\"submitbtn\" value=\"courseRegister\"><b>Submit</b></button>\n"
-                + "            </form>    \n"
-                + "        </div>\n"
-                + "\n"
-                + "        <div class=\"rightmenu\">\n"
-                + "            <br>\n"
-                + "        </div>\n"
-                + "\n"
-                + "        <div class=\"bottom\">\n"
-                + "            Project Team C\n"
-                + "        </div>\n"
-                + "    </body>\n"
-                + "</html>\n"
-                + "\n";
-
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println(welcomePage);
-
-        }
-    }
-
     public static void showFacultyWelcomePage(String userName, HttpServletResponse response) throws IOException {
         String welcomePage = "<!DOCTYPE html>\n"
                 + "<html>\n"

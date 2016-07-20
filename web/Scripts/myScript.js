@@ -28,6 +28,7 @@ $( function() {
 
         });
     }).change();
+    
     var dialog = $( "#dialog-confirm" ).dialog({
       autoOpen: false,
       resizable: false,
@@ -44,7 +45,33 @@ $( function() {
         }
       }
     });
+    
     $("#dropbutton").on( "click", function() {
         dialog.dialog( "open" );
+    });
+     
+    $( "#menu" ).menu({
+      items: "> :not(.ui-widget-header)"
+    });
+    
+    $("#studenthome").on( "click", function() {
+        $("#requesttype").val("StudentHome");
+        $("#welcomeForm").submit();
+    });
+    $("#registerCourse").on( "click", function() {
+        $("#requesttype").val("CoursesRegister");
+        $("#welcomeForm").submit();
+    });
+    $("#dropcourse").on( "click", function() {
+        $("#requesttype").val("CoursesDrop");
+        $("#welcomeForm").submit();
+    });
+    $("#viewgrades").on( "click", function() {
+        $("#requesttype").val("ViewGrade");
+        $("#welcomeForm").submit();
+    });
+    $("#logout").on( "click", function() {
+        $("#requesttype").val("Logout");
+        $("#welcomeForm").submit();
     });
   });

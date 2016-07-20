@@ -13,16 +13,18 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Team C's Project</title>
         <link href="Styles/main.css" rel="stylesheet" type="text/css" />
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.0/jquery-ui.js"></script>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css">
+        
     </head>
     <body>
         <div class="top">
-            <header id="branding" role="banner">
-                <img id="logo" src="Images/newlogo.png">	
-            </header>
+            <%@include file="template/header.jsp"%>
         </div>
 
         <div class="leftmenu">
-            <br>
+            <%@include file="template/left.jsp"%>
         </div>
 
         <div class ="main">
@@ -45,7 +47,8 @@
         </div>
 
         <div class="bottom">
-            Project Team C
+            <%@include file="template/bottom.jsp"%>
         </div>
     </body>
+    <script type="text/javascript" src="Scripts/myScript.js"></script>
 </html>

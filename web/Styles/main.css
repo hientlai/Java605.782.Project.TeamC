@@ -11,7 +11,7 @@
 }
 .leftmenu{
     background-color: rgb(255, 255, 255); 
-    height: 750px; width: 9%; 
+    height: 750px; width: 175px; 
     float: left;
 }
 .top{
@@ -89,3 +89,7 @@ input.bold{
     float: left;
     width: 30%;
 }
+
+.ui-menu { width: 170px; }
+.ui-widget-header { padding: 0.4em; }
+#menu {margin-top: 12px;}

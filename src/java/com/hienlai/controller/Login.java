@@ -16,6 +16,7 @@ import com.hienlai.util.JDBCDBUtil;
 import com.hienlai.util.Utils;
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebInitParam;
@@ -63,7 +64,7 @@ public class Login extends HttpServlet {
             session.setAttribute("isLogged", true);
             isSuccess = true;
             final User user = studentdao.getUser(userid);
-            if(user!=null){
+            if (user != null) {
                 String firstName = user.getFirstName();
                 String lastName = user.getLastName();
                 if (firstName != null && lastName != null) {
@@ -144,7 +145,9 @@ public class Login extends HttpServlet {
                 out.println("</html>");
             }
         } else if (STUDENT.equals(role)) {
-            Utils.showStudentWelcomePage(userName, response);
+            session.setAttribute("userName", userName);
+            RequestDispatcher rd = request.getRequestDispatcher("studentwelcome.jsp");
+            rd.forward(request, response);
         } else if (STAFF.equals(role)) {
             Utils.showStaffWelcomePage(userName, response);
         } else if (FACULTY.equals(role)) {
