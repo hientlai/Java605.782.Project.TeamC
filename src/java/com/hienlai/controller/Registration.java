@@ -3,16 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.hienlai.controller;
+package java.com.hienlai.controller;
 
-import com.hienlai.dao.FacultyDAOImpl;
-import com.hienlai.dao.StaffDAOImpl;
-import com.hienlai.dao.StudentDAO;
-import com.hienlai.dao.StudentDAOImpl;
-import com.hienlai.dao.UserDAO;
-import com.hienlai.util.JDBCDBUtil;
-import com.hienlai.util.Utils;
-import java.io.IOException;
+import java.com.hienlai.dao.FacultyDAOImpl;
+import java.com.hienlai.dao.StaffDAOImpl;
+import java.com.hienlai.dao.StudentDAOImpl;
+import java.com.hienlai.dao.UserDAO;
+import java.com.hienlai.util.JDBCDBUtil;
+import java.com.hienlai.util.Utils;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,6 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 /**
  *

@@ -3,30 +3,27 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.hienlai.controller;
+package java.com.hienlai.controller;
 
-import com.hienlai.model.CoursesSupportBean;
-import com.hienlai.util.JDBCDBUtil;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.hienlai.dao.CourseDAO;
-import com.hienlai.dao.CourseDAOImpl;
-import com.hienlai.dao.EnrollmentDAO;
-import com.hienlai.dao.EnrollmentDAOImpl;
-import com.hienlai.dao.OfferingDAO;
-import com.hienlai.dao.OfferingDAOImpl;
-import javax.servlet.annotation.WebInitParam;
+import java.com.hienlai.dao.*;
+import java.com.hienlai.model.CoursesSupportBean;
+import java.com.hienlai.util.JDBCDBUtil;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
 
 /**
  *

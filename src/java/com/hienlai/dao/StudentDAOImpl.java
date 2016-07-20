@@ -3,14 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.hienlai.dao;
+package java.com.hienlai.dao;
 
-import com.hienlai.model.User;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.com.hienlai.model.User;
+
+import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
