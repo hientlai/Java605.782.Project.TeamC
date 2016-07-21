@@ -35,7 +35,6 @@ public class RegistrationController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         HttpSession session = request.getSession(true);
         String requestType = (request.getParameter("requesttype"));
-
         if ("Submit".equals(requestType)) {
             //redirect it to Login_servlet
             RequestDispatcher rd = request.getRequestDispatcher("Login_servlet");

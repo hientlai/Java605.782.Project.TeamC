@@ -29,6 +29,7 @@ $( function() {
         });
     }).change();
     
+    var dropform;
     var dialog = $( "#dialog-confirm" ).dialog({
       autoOpen: false,
       resizable: false,
@@ -37,7 +38,7 @@ $( function() {
       modal: true,
       buttons: {
         "Drop": function() {
-          $( "#courseForm" ).submit();
+          dropform.submit();
           $( this ).dialog( "close" );
         },
         Cancel: function() {
@@ -46,7 +47,8 @@ $( function() {
       }
     });
     
-    $("#dropbutton").on( "click", function() {
+    $('[name="dropbutton"]').on( "click", function() {
+        dropform = $(this).closest( "form" );
         dialog.dialog( "open" );
     });
      

@@ -66,7 +66,7 @@ public class EnrollmentDAOImpl implements EnrollmentDAO {
         ResultSet resultSet = null;
         int noen = 0;
         try {
-            pstmt = conn.prepareStatement("SELECT COUNT(*) AS NOEN FROM ENROLLMENT WHERE STUDENT_ID =? AND OFFERING_ID = ?");
+            pstmt = conn.prepareStatement("SELECT COUNT(*) AS NOEN FROM ENROLLMENT WHERE STUDENT_ID =? AND OFFERING_ID = ? AND STATUS='Active'");
             pstmt.setInt(1, studentId);
             pstmt.setInt(2, offeringId);
             resultSet = pstmt.executeQuery();

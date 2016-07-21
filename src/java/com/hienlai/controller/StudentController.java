@@ -59,32 +59,37 @@ public class StudentController extends HttpServlet {
 
         if ("CoursesList".equals(requestType)) {
             //return json string of list courses for ajax fuction
-            RequestDispatcher rd = request.getRequestDispatcher("CoursesJSP.jsp");
-            String term = request.getParameter("term");
-            String year = request.getParameter("year");
-            List<CoursesSupportBean> courses = offeringDao.retrieveOfferingByTermYear(term, year);
-            Gson gson = new Gson();
-            JsonObject myObj = new JsonObject();
-            PrintWriter out = response.getWriter();
-            response.setContentType("text/html");
-            response.setHeader("Cache-control", "no-cache, no-store");
-            response.setHeader("Pragma", "no-cache");
-            response.setHeader("Expires", "-1");
-            response.setHeader("Access-Control-Allow-Origin", "*");
-            response.setHeader("Access-Control-Allow-Methods", "POST");
-            response.setHeader("Access-Control-Allow-Headers", "Content-Type");
-            response.setHeader("Access-Control-Max-Age", "86400");
+            System.out.println("CourseList");
+            try{
+                RequestDispatcher rd = request.getRequestDispatcher("CoursesJSP.jsp");
+                String term = request.getParameter("term");
+                String year = request.getParameter("year");
+                List<CoursesSupportBean> courses = offeringDao.retrieveOfferingByTermYear(term, year);
+                Gson gson = new Gson();
+                JsonObject myObj = new JsonObject();
+                PrintWriter out = response.getWriter();
+                response.setContentType("text/html");
+                response.setHeader("Cache-control", "no-cache, no-store");
+                response.setHeader("Pragma", "no-cache");
+                response.setHeader("Expires", "-1");
+                response.setHeader("Access-Control-Allow-Origin", "*");
+                response.setHeader("Access-Control-Allow-Methods", "POST");
+                response.setHeader("Access-Control-Allow-Headers", "Content-Type");
+                response.setHeader("Access-Control-Max-Age", "86400");
 
-            if (courses == null || courses.isEmpty()) {
-                myObj.addProperty("success", false);
-            } else {
-                myObj.addProperty("success", true);
-                JsonElement coursesObj = gson.toJsonTree(courses);
-                myObj.add("courses", coursesObj);
+                if (courses == null || courses.isEmpty()) {
+                    myObj.addProperty("success", false);
+                } else {
+                    myObj.addProperty("success", true);
+                    JsonElement coursesObj = gson.toJsonTree(courses);
+                    myObj.add("courses", coursesObj);
 
+                }
+                out.println(myObj.toString());
+                out.close();
+            }catch(Exception e){
+                e.printStackTrace();
             }
-            out.println(myObj.toString());
-            out.close();
 
         } else if ("Enroll".equals(requestType)) {
             //Student enroll a course

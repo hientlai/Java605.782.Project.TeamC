@@ -45,10 +45,10 @@
 
                                 <td>${course.courseId} - ${course.courseName}</td>
                                 <td>${course.enrollmentDate}</td>
-                                <td><form id="courseForm" action="Student_servlet" method="post">
+                                <td><form action="Student_servlet" method="post">
                                         <input type="hidden" name="enrollmentId" value="${course.enrollmentId}">
                                         <input type="hidden" name="requesttype" value="Drop">
-                                        <input type="button" value="Drop" id="dropbutton" >
+                                        <input type="button" value="Drop" name="dropbutton" >
                                     </form></td>
 
                             </tr>
@@ -70,5 +70,9 @@
             Project Team C
         </div>
     </body>
+    <div id="dialog-confirm" title="Drop the course?">
+        <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>This course will be dropped. Are you sure?</p>
+    </div>
     <script type="text/javascript" src="Scripts/myScript.js"></script>
+    
 </html>
