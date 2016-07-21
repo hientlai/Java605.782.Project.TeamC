@@ -24,7 +24,7 @@
         </div>
 
         <div class="leftmenu">
-            <%@include file="template/left.jsp"%>
+            <%@include file="template/studentleft.jsp"%>
         </div>
 
         <div class ="main">

@@ -6,6 +6,7 @@
 package com.hienlai.dao;
 
 import com.hienlai.model.User;
+import com.hienlai.util.DESEncryptDecryptUntil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -37,7 +38,7 @@ public class StudentDAOImpl implements StudentDAO {
             Statement statement = conn.createStatement();
             pstmt = conn.prepareStatement("SELECT count(*) as nost FROM STUDENT WHERE USERID = ? AND PASSWORD = ?");
             pstmt.setString(1, userId);
-            pstmt.setString(2, password);
+            pstmt.setString(2, DESEncryptDecryptUntil.encrypt(password));
             resultSet = pstmt.executeQuery();
             while (resultSet.next()) {
                 count = resultSet.getInt("nost");
@@ -67,7 +68,7 @@ public class StudentDAOImpl implements StudentDAO {
 
     @Override
     public boolean insert(String firstName, String lastName, String ssn, String email, String address, String userId, String password) {
-        System.out.println("Insert student's record to database.");
+        System.out.println("Insert student's record to database." + DESEncryptDecryptUntil.encrypt(password));
         PreparedStatement pstmt = null;
         try {
             pstmt = conn.prepareStatement("INSERT INTO STUDENT(FIRST_NAME, LAST_NAME, SSN, EMAIL, ADDRESS, USERID, PASSWORD) VALUES (?,?,?,?,?,?,?)");
@@ -77,7 +78,7 @@ public class StudentDAOImpl implements StudentDAO {
             pstmt.setString(4, email);
             pstmt.setString(5, address);
             pstmt.setString(6, userId);
-            pstmt.setString(7, password);
+            pstmt.setString(7, DESEncryptDecryptUntil.encrypt(password));
 
             int count = pstmt.executeUpdate();
             if(count == 1)
