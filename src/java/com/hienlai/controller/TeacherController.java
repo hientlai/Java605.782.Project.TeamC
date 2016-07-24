@@ -2,6 +2,7 @@ package com.hienlai.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import javax.websocket.server.PathParam;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.hienlai.dao.EnrollmentDAO;
@@ -45,17 +47,34 @@ public class TeacherController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		processGet(request, response);
-		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * 
+	 * Done when updating grades
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		EnrollmentDAO enrollDao = new EnrollmentDAOImpl(JDBCDBUtil.getConnection());
+		Enumeration<String> names = request.getParameterNames();
+		String name = "";
+		String grade = "";
+		String enrollId = "";
+		boolean success;
+		while (names.hasMoreElements()) {
+			name = names.nextElement();
+			enrollId = name;
+			grade = request.getParameter(name);
+			success = enrollDao.updateEnrollement(enrollId, grade);
+			if (!success) {
+				request.setAttribute("failed" , true );
+			}
+		}
+		RequestDispatcher rd = request.getRequestDispatcher("grades.jsp");
+		rd.forward(request, response);
+		
+		
 	}
 	
 	protected void processGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -65,6 +84,7 @@ public class TeacherController extends HttpServlet {
 		RequestDispatcher rd = null;
 		// get list of courses
 		if (selection == null) {
+			session.setAttribute("edit", false);
 			switch (requestType) {
 			case "Logout": 
 				session.invalidate();
@@ -72,6 +92,7 @@ public class TeacherController extends HttpServlet {
 				rd.forward(request, response);
 				break;
 			case "EditGrade":
+				session.setAttribute("edit", true);
 			case "Grade":
 				User user = (User) session.getAttribute("user");
 				OfferingDAO offeringDao = new OfferingDAOImpl(JDBCDBUtil.getConnection());
@@ -87,11 +108,21 @@ public class TeacherController extends HttpServlet {
 		}
 		// get list of students and grades
 		else {
+			Gson gson = new Gson();
 			EnrollmentDAO enrollDao = new EnrollmentDAOImpl(JDBCDBUtil.getConnection());
 			List<StudentGradeBean> grades = enrollDao.getStudentGrades(selection);
-			String json = new Gson().toJson(grades);
+			JsonObject jsonObj = new JsonObject();
+			Boolean isEdit = (Boolean) session.getAttribute("edit");
+			if (isEdit == null) {
+				isEdit = false;
+			}
+			jsonObj.addProperty("edit", isEdit);
+			jsonObj.add("grades", gson.toJsonTree(grades));
+			String json = new Gson().toJson(jsonObj);
 			response.setContentType("application/json");
-			response.getWriter().println(json);
+			PrintWriter out = response.getWriter();
+			out.println(json);
+			out.close();
 		}
 	}
 

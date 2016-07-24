@@ -43,6 +43,30 @@
         	}
         		
         %>
+        <% Boolean failed = (Boolean) request.getAttribute("failed");
+        	String msg = "";
+        	if (failed != null) {
+        		msg = "At least one of your grade changes failed.";
+        	}
+        %>
+        <h1 style="color:red"><%=msg %></h1>
+        <form action="TeacherController" method="post" >
+	        <div class="gradesList">
+	        	<table class="gradesTable">
+	        		<thead>
+	        			<tr>
+	        				<th>Last</th>
+	        				<th>First</th>
+	        				<th>Grade</th>
+	        			</tr>
+	        		</thead>
+	        		<tbody class="gradeInfo">
+	        		</tbody>
+	        	</table>
+	        </div>
+	        
+        	<input type="submit" value="Update" id="updateGrades">
+        </form>
         </div>
 
         <div class="rightmenu">

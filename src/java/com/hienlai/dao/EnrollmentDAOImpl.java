@@ -95,4 +95,36 @@ public class EnrollmentDAOImpl implements EnrollmentDAO {
 
 	        return gradeList;
 	}
+
+	@Override
+	public boolean updateEnrollement(String enrollId, String grade) {
+		System.out.println("update enrollment's record to database with enroll id: " + enrollId + " and grade =: " + grade);
+        PreparedStatement pstmt = null;
+        boolean success = false;
+        try {
+            pstmt = conn.prepareStatement("UPDATE ENROLLMENT SET GRADE=? WHERE ENROLLMENT_ID=?");
+            pstmt.setString(1, grade);
+            pstmt.setString(2, enrollId);
+            if (pstmt.executeUpdate() == 1) {
+                System.out.println("Update the enrollment successfully");
+            	success = true;
+            }
+            else
+                System.out.println("Update the enrollment fail");
+
+        } catch (SQLException ex) {
+            System.out.println("Update the enrollment fail");
+            Logger.getLogger(EnrollmentDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (pstmt != null) {
+                try {
+                    pstmt.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(EnrollmentDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+
+        return success;
+	}
 }
