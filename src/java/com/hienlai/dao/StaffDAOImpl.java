@@ -5,12 +5,16 @@
  */
 package com.hienlai.dao;
 
+import com.hienlai.model.CoursesSupportBean;
+import com.hienlai.model.StaffSupportBean;
 import com.hienlai.model.User;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,6 +29,69 @@ public class StaffDAOImpl implements StaffDAO {
     public StaffDAOImpl(Connection conn) {
 
         this.conn = conn;
+    }
+
+    public boolean overrideSelectedCourseCapacty(int courseId, int overrideNum) {
+        System.out.println("Override Selected Course");
+        PreparedStatement pstmt = null;
+        ResultSet resultSet = null;
+
+        try {
+            pstmt = conn.prepareStatement("UPDATE offering SET course_capacity=? WHERE course_id=?");
+            pstmt.setInt(1, courseId);
+            pstmt.setInt(2, overrideNum);
+            resultSet = pstmt.executeQuery();
+
+            if (resultSet.getFetchSize() == 1) {
+                return true;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public List<StaffSupportBean> getCurrentCourseOfferings() {
+        System.out.println("Retrieve courses lists from database.");
+        PreparedStatement pstmt = null;
+        ResultSet resultSet = null;
+
+        int course_id;
+        String course_name;
+
+        List<StaffSupportBean> courses = new ArrayList<StaffSupportBean>();
+
+        try {
+            pstmt = conn.prepareStatement("SELECT * FROM courses");
+            resultSet = pstmt.executeQuery();
+
+            while (resultSet.next()) {
+                course_id = resultSet.getInt("course_id");
+                course_name = resultSet.getString("course_name");
+
+                StaffSupportBean bean = new StaffSupportBean(course_id, course_name);
+                courses.add(bean);
+            }
+
+            return courses;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(StudentDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        return null;
     }
 
     @Override

@@ -42,5 +42,5 @@ public interface CourseDAO {
      * @param courseName
      * @return 
      */
-    public boolean insertCourse(int courseId, String courseName);
+    public boolean insertCourse(int courseId, String courseName, int credits);
 }

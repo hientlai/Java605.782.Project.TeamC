@@ -1,0 +1,9 @@
+# Created by .ignore support plugin (hsz.mobi)
+build/
+dist/
+nbproject/
+out/
+.gitignore
+.idea
+src/java/db.properties
+.gitignore
