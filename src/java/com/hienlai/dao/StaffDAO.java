@@ -11,5 +11,7 @@ package com.hienlai.dao;
  */
 public interface StaffDAO  extends UserDAO{
 
+    public boolean overrideSelectedCourseCapacty(int courseId, int overrideNum);
+
     
 }

@@ -29,6 +29,49 @@ public class OfferingDAOImpl implements OfferingDAO {
         this.conn = conn;
     }
 
+    public boolean overrideSelectedCourseCapacty(int courseId, int overrideNum) {
+        System.out.println("Override Selected Course");
+        PreparedStatement pstmt;
+
+        try {
+            pstmt = conn.prepareStatement("UPDATE offering SET course_capacity=? WHERE course_id=?");
+            pstmt.setInt(1, overrideNum);
+            pstmt.setInt(2, courseId);
+            int resultSet = pstmt.executeUpdate();
+
+            if (resultSet == 1) {
+                return true;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public boolean checkCourseExists(int course_id) {
+        System.out.println("Check if the course_id exists in the Offering database.");
+        PreparedStatement pstmt = null;
+        ResultSet resultSet = null;
+
+        try {
+            pstmt = conn.prepareStatement("SELECT * FROM offering WHERE course_id=?");
+            pstmt.setInt(1, course_id);
+            resultSet = pstmt.executeQuery();
+
+            while (resultSet.next()) {
+                if (resultSet.getInt("course_id") == course_id)
+                    return true;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
     @Override
     public List<CoursesSupportBean> retrieveOfferingByTermYear(String term, String year) {
         System.out.println("Retrieve courses lists from database with term: " + term + " and year: " + year);
@@ -168,6 +211,31 @@ public class OfferingDAOImpl implements OfferingDAO {
                 Logger.getLogger(StudentDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        return null;
+    }
+
+    public CoursesSupportBean modifyCourseCapacity(int course_id, int offering) {
+        System.out.println("Modify the course capacity from database with offering: " + offering + "and course_id: " + course_id);
+        PreparedStatement pstmt;
+        ResultSet resultSet;
+        int courseId;
+        String courseName;
+        int courseCapacity;
+
+        try {
+            pstmt = conn.prepareStatement("SELECT course_id FROM offering WHERE course_id = ?");
+            pstmt.setInt(1, course_id);
+            resultSet = pstmt.executeQuery();
+
+            if (resultSet.getFetchSize() == 1) {
+                while (resultSet.next()) {
+//                    PreparedStatement pstmt2 = conn.prepareStatement("UPDATE offering SET ");
+                }
+            }
+        } catch (SQLException e) {
+            e.getStackTrace();
+        }
+
         return null;
     }
 }

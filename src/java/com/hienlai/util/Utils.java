@@ -86,7 +86,7 @@ public class Utils {
                 + "        </div>\n"
                 + "\n"
                 + "        <div class =\"main\">\n"
-                + "            <form id=\"welcomeForm\" action=\"RegistrationController_servlet\" method=\"post\">\n"
+                + "            <form id=\"welcomeForm\" action=\"staffController\" method=\"post\">\n"
                 + "                <h2> Welcome to the site,  " + userName + "</h2>\n"
                 + "                \n"
                 + "                <h4>Select your next action:</h4>\n"

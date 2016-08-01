@@ -21,7 +21,21 @@ public interface OfferingDAO {
      */
     public List<CoursesSupportBean> retrieveOfferingByTermYear(String term, String year);
 
-    
+    /**
+     * Check if the course exists
+     * @param course_id
+     * @return
+     */
+    public boolean checkCourseExists(int course_id);
+
+    /**
+     * Override the course capacity
+     * @param courseId
+     * @param overrideNum
+     * @return
+     */
+    public boolean overrideSelectedCourseCapacty(int courseId, int overrideNum);
+
         /**
      * retrieve students registered
      *

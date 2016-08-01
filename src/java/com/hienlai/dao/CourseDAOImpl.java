@@ -111,7 +111,7 @@ public class CourseDAOImpl implements CourseDAO {
         int count = 0;
         try {
             Statement statement = conn.createStatement();
-            pstmt = conn.prepareStatement("SELECT count(*) as nost FROM COURSES WHERE COURSEID = ?");
+            pstmt = conn.prepareStatement("SELECT count(*) as nost FROM COURSES WHERE course_id = ?");
             pstmt.setInt(1, courseId);
             resultSet = pstmt.executeQuery();
             while (resultSet.next()) {
@@ -141,13 +141,14 @@ public class CourseDAOImpl implements CourseDAO {
     }
 
     @Override
-    public boolean insertCourse(int courseId, String courseName) {
+    public boolean insertCourse(int courseId, String courseName, int credits) {
         System.out.println("Insert course's record to database.");
         PreparedStatement pstmt = null;
         try {
-            pstmt = conn.prepareStatement("INSERT INTO COURSES (COURSEID, COURSE_NAME) VALUES (?, ?)");
+            pstmt = conn.prepareStatement("INSERT INTO COURSES (course_id, COURSE_NAME, credits) VALUES (?, ?, ?)");
             pstmt.setInt(1, courseId);
             pstmt.setString(2, courseName);
+            pstmt.setInt(3, credits);
             
             if(pstmt.executeUpdate() == 1)
                 System.out.println("Insert the course id: " + courseId + " successfully");
