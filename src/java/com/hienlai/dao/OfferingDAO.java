@@ -19,6 +19,13 @@ public interface OfferingDAO {
      * @return
      */
     List<CoursesSupportBean> retrieveOfferingByTermYear(String term, String year);
+    
+    /**
+     * retrieves courses
+     *
+     * @return
+     */
+    List<CoursesSupportBean> retrieveCurrentOfferingByTeacherId(String teacherId);
 
 
     /**

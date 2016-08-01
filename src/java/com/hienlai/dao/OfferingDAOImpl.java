@@ -163,4 +163,43 @@ public class OfferingDAOImpl implements OfferingDAO {
         }
         return null;
     }
+
+	@Override
+	public List<CoursesSupportBean> retrieveCurrentOfferingByTeacherId(String teacherId) {
+		System.out.println("Retrieve courses lists from database with teacher id: " + teacherId );
+        PreparedStatement pstmt = null;
+        ResultSet resultSet = null;
+        int course_id;
+        String course_name;
+        int offering_id;
+        List<CoursesSupportBean> courses = new ArrayList<CoursesSupportBean>();
+        try {
+            pstmt = conn.prepareStatement("SELECT C.COURSE_ID, C.COURSE_NAME, O.OFFERING_ID FROM COURSES AS C JOIN OFFERING AS O on C.COURSE_ID = O.COURSE_ID where O.FACULTY_ID=?");
+            pstmt.setString(1, teacherId);
+            resultSet = pstmt.executeQuery();
+            while (resultSet.next()) {
+                course_id = resultSet.getInt("course_id");
+                course_name = resultSet.getString("course_name");
+                offering_id =  resultSet.getInt("offering_id");
+                CoursesSupportBean bean = new CoursesSupportBean(course_id, course_name, offering_id);
+                courses.add(bean);
+            }
+
+            return courses;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(StudentDAOImpl.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return null;
+	}
 }

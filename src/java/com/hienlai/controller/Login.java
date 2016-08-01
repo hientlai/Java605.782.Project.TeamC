@@ -46,6 +46,7 @@ public class Login extends HttpServlet {
         String userName = null;
         String userid = request.getParameter("userid_login");
         String password = request.getParameter("password_login");
+        User user = null;
         boolean validateUserPass = Utils.validateUserNamePassword(userid, password, response);
         if (!validateUserPass) {
             return;
@@ -57,8 +58,8 @@ public class Login extends HttpServlet {
         if (studentdao.isUserIdPasswordMatch(userid, password)) {
             session.setAttribute("isLogged", true);
             isSuccess = true;
-            final User user = studentdao.getUser(userid);
-            if (user != null) {
+            user = studentdao.getUser(userid);
+            if(user!=null){
                 String firstName = user.getFirstName();
                 String lastName = user.getLastName();
                 if (firstName != null && lastName != null) {
@@ -75,7 +76,7 @@ public class Login extends HttpServlet {
         if (staffdao.isUserIdPasswordMatch(userid, password)) {
             session.setAttribute("isLogged", true);
             isSuccess = true;
-
+            user = staffdao.getUser(userid);
             String firstName = staffdao.getUser(userid).getFirstName();
             String lastName = staffdao.getUser(userid).getLastName();
             if (firstName != null && lastName != null) {
@@ -90,6 +91,7 @@ public class Login extends HttpServlet {
         if (facultydao.isUserIdPasswordMatch(userid, password)) {
             session.setAttribute("isLogged", true);
             isSuccess = true;
+            user = facultydao.getUser(userid);
             String firstName = facultydao.getUser(userid).getFirstName();
             String lastName = facultydao.getUser(userid).getLastName();
             if (firstName != null && lastName != null) {
@@ -99,7 +101,6 @@ public class Login extends HttpServlet {
             }
             role = FACULTY;
         }
-
         if (isSuccess == false) {
 
             int attemptno = Integer.parseInt(getServletConfig().getInitParameter("attemptno"));
@@ -138,12 +139,16 @@ public class Login extends HttpServlet {
                 out.println("</body>");
                 out.println("</html>");
             }
-        } else if (STUDENT.equals(role)) {
-            Utils.showStudentWelcomePage(userName, response);
-        } else if (STAFF.equals(role)) {
-            Utils.showStaffWelcomePage(userName, response);
-        } else if (FACULTY.equals(role)) {
-            Utils.showFacultyWelcomePage(userName, response);
+        } else { 
+        	session.setAttribute("user", user);
+        	if (STUDENT.equals(role)) {
+        		Utils.showStudentWelcomePage(userName, response);
+        	} else if (STAFF.equals(role)) {
+        		Utils.showStaffWelcomePage(userName, response);
+        	} else if (FACULTY.equals(role)) {
+        		Utils.showFacultyWelcomePage(userName, response);
+        
+        	}
         }
 
     }

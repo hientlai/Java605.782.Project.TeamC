@@ -5,10 +5,17 @@
  */
 package com.hienlai.dao;
 
+import java.util.List;
+
+import com.hienlai.model.StudentGradeBean;
 
 /**
  * @author Hien
  */
-public interface EnrollmentDAO {
+public interface EnrollmentDAO { 
     boolean insertEnrollment(String status, String student_id, String offering_id);
+    
+    List<StudentGradeBean> getStudentGrades(String offeringId);
+    
+    boolean updateEnrollement(String enrollId, String grade);
 }

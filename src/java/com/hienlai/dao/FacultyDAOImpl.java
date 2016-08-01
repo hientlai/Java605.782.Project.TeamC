@@ -94,15 +94,17 @@ public class FacultyDAOImpl implements FacultyDAO {
         ResultSet resultSet = null;
         String firstName = null;
         String lastName = null;
+        String id = null;
         try {
             Statement statement = conn.createStatement();
-            pstmt = conn.prepareStatement("SELECT FIRST_NAME, LAST_NAME FROM FACULTY WHERE USERID = ?");
+            pstmt = conn.prepareStatement("SELECT FIRST_NAME, LAST_NAME, FACULTY_ID FROM FACULTY WHERE USERID = ?");
             pstmt.setString(1, userId);
             resultSet = pstmt.executeQuery();
             while (resultSet.next()) {
                 firstName = resultSet.getString("FIRST_NAME");
                 lastName = resultSet.getString("LAST_NAME");
-                return new User(firstName, lastName, null, null, null, null, null, null);
+                id = resultSet.getString("FACULTY_ID");
+                return new User(firstName,lastName,null,null,null,null,null,id);
             }
             return null;
 
