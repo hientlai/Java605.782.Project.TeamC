@@ -20,6 +20,8 @@ public interface OfferingDAO {
      * @return
      */
     public List<CoursesSupportBean> retrieveOfferingByTermYear(String term, String year);
+    
+    public List<CoursesSupportBean> retrieveCurrentOfferingByTeacherId(String teacherId);
 
     /**
      * Check if the course exists
