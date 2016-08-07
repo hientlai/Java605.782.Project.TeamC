@@ -6,6 +6,8 @@
 package com.hienlai.dao;
 
 import com.hienlai.model.CoursesSupportBean;
+import com.hienlai.model.StudentGradeBean;
+
 import java.util.List;
 
 /**
@@ -45,6 +47,15 @@ public interface EnrollmentDAO {
      */
     public void updateStatusEnrollment(int enrollmentId, String status);
     
+    /**
+     * 
+     * @param enrollId
+     * @param grade
+     * @return
+     */
+    public boolean updateEnrollementGrade(String enrollId, String grade);
+    
+    public List<StudentGradeBean> getStudentGrades(String offeringId);
     
     /**
      * get enrollment

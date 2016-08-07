@@ -12,11 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.websocket.server.PathParam;
-
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.hienlai.dao.EnrollmentDAO;
 import com.hienlai.dao.EnrollmentDAOImpl;
@@ -94,7 +90,7 @@ public class TeacherController extends HttpServlet {
 			case "EditGrade":
 				session.setAttribute("edit", true);
 			case "Grade":
-				User user = (User) session.getAttribute("user");
+				User user = (User) session.getAttribute("facultyUser");
 				OfferingDAO offeringDao = new OfferingDAOImpl(JDBCDBUtil.getConnection());
 				List<CoursesSupportBean> courses = offeringDao.retrieveCurrentOfferingByTeacherId(user.getId());
 				System.out.println("courses np " + courses.size());

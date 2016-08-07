@@ -96,8 +96,10 @@ public class Login extends HttpServlet {
         if (facultydao.isUserIdPasswordMatch(userid, password)) {
             session.setAttribute("isLogged", true);
             isSuccess = true;
-            String firstName = facultydao.getUser(userid).getFirstName();
-            String lastName = facultydao.getUser(userid).getLastName();
+            User facultyUser = facultydao.getUser(userid);
+            String firstName = facultyUser.getFirstName();
+            String lastName = facultyUser.getLastName();
+            session.setAttribute("facultyUser", facultyUser);
             if (firstName != null && lastName != null) {
                 userName = firstName + " " + lastName;
             } else {
