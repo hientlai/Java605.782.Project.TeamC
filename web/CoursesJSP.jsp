@@ -28,7 +28,6 @@
         <div class ="main">
             <c:choose>
                 <c:when test="${sessionScope.isLogged == true}">
-
                     <h2> Welcome to the Student Registration Site  </h2>
                     <br/>
                     <br/>
@@ -55,14 +54,11 @@
                     <h4>Available courses: </h4>
                     <br/>
                     <form id="courseForm" action="RegistrationController_servlet" method="post">
-                        <div id="coursedropdown"></div>
-
+                        <div id="offeringdropdown"></div>
                         <br/>
                         <br/>
                         <br/>
-
                         <input type="submit" class="bold" name="requesttype" value="Enroll">
-
                         <br/>
                         <br/>
                         <br/>   

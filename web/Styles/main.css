@@ -1,13 +1,13 @@
 #logo{
-        width:500px;
-	height:128px;
-	margin-left: 10%;
+    width:500px;
+    height:128px;
+    margin-left: 10%;
 }
 #branding {
-	background-color: #202c5f;
-	padding-bottom: 0;
-	position: relative;
-	z-index: 9999;	
+    background-color: #202c5f;
+    padding-bottom: 0;
+    position: relative;
+    z-index: 9999;	
 }
 .leftmenu{
     background-color: rgb(255, 255, 255); 

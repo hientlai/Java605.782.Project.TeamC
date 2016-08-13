@@ -31,7 +31,7 @@
                     <tr>
                         <td><b><u>P</u>assword: </b></td>
                         <td><input type="password" accesskey="p" name="password_login" size="8">
-                            <a href="">Forgot your password?</a></td>
+                        </td>
                     </tr>
                 </table> 
                 <br/>

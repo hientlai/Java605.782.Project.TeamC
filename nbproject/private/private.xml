@@ -3,7 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Hien/Documents/NetBeansProjects/Java605.782.Project.TeamC/src/java/com/hienlai/controller/Login.java</file>
+            <file>file:/C:/Users/Hien/Documents/NetBeansProjects/Java605.782.Project.TeamC/src/java/com/hienlai/dao/CourseDAO.java</file>
+            <file>file:/C:/Users/Hien/Documents/NetBeansProjects/Java605.782.Project.TeamC/src/java/com/hienlai/controller/StaffController.java</file>
+            <file>file:/C:/Users/Hien/Documents/NetBeansProjects/Java605.782.Project.TeamC/web/Scripts/myScript.js</file>
+            <file>file:/C:/Users/Hien/Documents/NetBeansProjects/Java605.782.Project.TeamC/src/java/com/hienlai/dao/OfferingDAO.java</file>
+            <file>file:/C:/Users/Hien/Documents/NetBeansProjects/Java605.782.Project.TeamC/web/staffOverride.jsp</file>
+            <file>file:/C:/Users/Hien/Documents/NetBeansProjects/Java605.782.Project.TeamC/src/java/com/hienlai/dao/OfferingDAOImpl.java</file>
         </group>
     </open-files>
 </project-private>

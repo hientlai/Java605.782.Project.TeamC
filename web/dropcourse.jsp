@@ -74,5 +74,5 @@
         <p><span class="ui-icon ui-icon-alert" style="float:left; margin:12px 12px 20px 0;"></span>This course will be dropped. Are you sure?</p>
     </div>
     <script type="text/javascript" src="Scripts/myScript.js"></script>
-    
+
 </html>

@@ -13,9 +13,7 @@ and open the template in the editor.
     </head>
     <body>
         <div class="top">
-            <header id="branding" role="banner">
-                <img id="logo" src="Images/newlogo.png">	
-            </header>
+            <%@include file="template/header.jsp"%>
         </div>
 
         <div class="leftmenu">

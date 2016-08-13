@@ -7,9 +7,8 @@
         <li>-</li>
         <li id="dropcourse"><div>Drop the course</div></li>
         <li>-</li>
-        <li id="viewgrades"><div>View course grade</div></li>
+        <li id="viewstudentgrades"><div>View course grade</div></li>
         <li>-</li>
         <li id="logout" ><div>Logout</div></li>
-
     </ul>
 </form>
