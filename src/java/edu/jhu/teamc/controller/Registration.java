@@ -67,7 +67,7 @@ public class Registration extends HttpServlet {
             session.setAttribute("role", role);
 
             //redirect to Form B
-            RequestDispatcher rd = request.getRequestDispatcher("registrationFormB.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("secure/registrationFormB.jsp");
             rd.forward(request, response);
         } else if ("RegisterFormB".equals(requesttype)) {
             //process for Form B

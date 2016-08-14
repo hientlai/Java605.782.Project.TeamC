@@ -41,8 +41,10 @@ public class RegistrationController extends HttpServlet {
             rd.forward(request, response);
         } else if ("Register".equals(requestType)) {
             //redirect it to Registration Form A
-            RequestDispatcher rd = request.getRequestDispatcher("registrationFormA.jsp");
-            rd.forward(request, response);
+        	response.sendRedirect("secure/registrationFormA.jsp");
+//            RequestDispatcher rd = request.getRequestDispatcher("secure/registrationFormA.jsp");
+//            
+//            rd.forward(request, response);
         } else if ("Continue".equals(requestType)) {
             //redirect it to Registration_servlet
             RequestDispatcher rd = request.getRequestDispatcher("Registration_servlet");

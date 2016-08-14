@@ -9,6 +9,17 @@
             30
         </session-timeout>
     </session-config>
+      <security-constraint>
+    <web-resource-collection>
+    	<web-resource-name></web-resource-name>
+      <url-pattern>/secure/*</url-pattern>
+      <url-pattern>/</url-pattern>
+      <url-pattern>/login.jsp</url-pattern>
+    </web-resource-collection>
+    <user-data-constraint>
+      <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+    </user-data-constraint>
+  </security-constraint>
         <servlet>
         <servlet-name>registrarcourse</servlet-name>
         <jsp-file>/RegistrarCourse.jsp</jsp-file>
