@@ -104,6 +104,7 @@ public class Registration extends HttpServlet {
                 if (dao.getUser(userid) == null) {
                     isInserted = dao.insert(firstname, lastname, ssn, email, address, userid, password);
                     if (isInserted) {
+                    	session.setAttribute("userName", firstname + " " + lastname);
                         RequestDispatcher rd = request.getRequestDispatcher("staffwelcome.jsp");
                         rd.forward(request, response);
                     }
@@ -118,6 +119,7 @@ public class Registration extends HttpServlet {
                 if (dao.getUser(userid) == null) {
                     isInserted = dao.insert(firstname, lastname, ssn, email, address, userid, password);
                     if (isInserted) {
+                    	session.setAttribute("userName", firstname + " " + lastname);
                         RequestDispatcher rd = request.getRequestDispatcher("facultywelcome.jsp");
                         rd.forward(request, response);
                     }
